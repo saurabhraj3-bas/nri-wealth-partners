@@ -39,7 +39,8 @@ const EducationCalculator = () => {
   }
 
   const handleEducationChange = (type: string, location: string) => {
-    const preset = educationPresets[type as keyof typeof educationPresets]?.[location as keyof typeof preset]
+    const typePreset = educationPresets[type as keyof typeof educationPresets]
+    const preset = typePreset?.[location as keyof typeof typePreset]
     if (preset) {
       setCurrentCost(preset.cost)
       setInflationRate(preset.inflation)
