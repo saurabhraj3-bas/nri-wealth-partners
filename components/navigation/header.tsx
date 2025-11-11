@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X, Phone, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -57,7 +57,6 @@ const Header = () => {
     },
     { name: "Resources", href: "/resources" },
     { name: "Webinars", href: "/webinars" },
-    { name: "Contact", href: "/contact" },
   ]
 
   return (
@@ -128,15 +127,8 @@ const Header = () => {
 
           {/* Right Side Actions */}
           <div className="hidden lg:flex items-center space-x-2 flex-shrink-0">
-            <a
-              href="tel:+919974742626"
-              className="hidden xl:flex items-center text-sm font-medium text-gray-700 hover:text-navy transition-colors whitespace-nowrap"
-            >
-              <Phone className="h-4 w-4 mr-1.5" />
-              +91 9974742626
-            </a>
             <Button asChild variant="cta" size="sm" className="whitespace-nowrap">
-              <Link href="/contact">Get Started</Link>
+              <Link href="/services">Get Started</Link>
             </Button>
           </div>
 
@@ -187,17 +179,10 @@ const Header = () => {
                 )}
               </div>
             ))}
-            <div className="mt-4 px-4 space-y-2">
-              <a
-                href="tel:+919974742626"
-                className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
-              >
-                <Phone className="h-4 w-4 mr-2" />
-                +91 9974742626
-              </a>
+            <div className="mt-4 px-4">
               <Button asChild variant="cta" size="default" className="w-full">
-                <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                  Schedule Consultation
+                <Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>
+                  Get Started
                 </Link>
               </Button>
             </div>

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Phone, Mail, ArrowRight } from "lucide-react"
+import { Mail, ArrowRight } from "lucide-react"
 
 const FinalCTA = () => {
   return (
@@ -28,23 +28,9 @@ const FinalCTA = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="xl" className="bg-white/10 border-white/30 text-white hover:bg-white/20">
-              <a href="tel:+919974742626">
-                <Phone className="mr-2 h-5 w-5" />
-                +91 9974742626
-              </a>
-            </Button>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-gray-200">
-            <a
-              href="tel:+919974742626"
-              className="flex items-center gap-2 hover:text-gold transition-colors"
-            >
-              <Phone className="h-5 w-5" />
-              +91 9974742626
-            </a>
-            <span className="hidden sm:inline text-gray-400">|</span>
+          <div className="flex justify-center items-center text-gray-200">
             <a
               href="mailto:support@nriwealthpartners.com"
               className="flex items-center gap-2 hover:text-gold transition-colors"
