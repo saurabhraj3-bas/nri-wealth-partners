@@ -32,7 +32,7 @@ const upcomingWebinars = [
     time: "19:00",
     timezone: "EST",
     duration: "60 mins",
-    registrationLink: "https://forms.google.com/your-form-link", // Replace with your Google Form
+    registrationLink: "https://forms.gle/FufBjAnxLsURB8h98",
     topics: [
       "Section 80C to 80U deductions",
       "Old vs New tax regime comparison",
@@ -54,7 +54,7 @@ const upcomingWebinars = [
     time: "20:00",
     timezone: "GMT",
     duration: "60 mins",
-    registrationLink: "https://forms.google.com/your-form-link", // Replace with your Google Form
+    registrationLink: "https://forms.gle/FufBjAnxLsURB8h98",
     topics: [
       "SIP vs Lumpsum investing",
       "Selecting right mutual funds",
@@ -76,7 +76,7 @@ const upcomingWebinars = [
     time: "20:00",
     timezone: "GST",
     duration: "75 mins",
-    registrationLink: "https://forms.google.com/your-form-link", // Replace with your Google Form
+    registrationLink: "https://forms.gle/FufBjAnxLsURB8h98",
     topics: [
       "Retirement corpus calculation",
       "Investment allocation strategies",
