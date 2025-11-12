@@ -13,9 +13,9 @@ const CookieConsent = dynamicImport(() => import("@/components/cookie-consent"),
   ssr: false,
 })
 
-// Force dynamic rendering for all pages to avoid static generation issues
-// This is necessary for Cloud Run deployment with interactive components
+// Force dynamic rendering - required due to Button component serialization issues
 export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
 
 const inter = Inter({
   subsets: ["latin"],

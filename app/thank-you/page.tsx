@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { CheckCircle2, ArrowRight, Calculator, Home } from "lucide-react"
 
 export default function ThankYouPage() {
@@ -49,18 +48,20 @@ export default function ThankYouPage() {
           <div className="space-y-4">
             <p className="text-gray-600 font-medium">While you wait, explore our resources:</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="cta" size="lg">
-                <Link href="/calculators">
-                  <Calculator className="mr-2 h-5 w-5" />
-                  Try Our Calculators
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/">
-                  <Home className="mr-2 h-5 w-5" />
-                  Back to Home
-                </Link>
-              </Button>
+              <Link
+                href="/calculators"
+                className="inline-flex items-center justify-center h-11 px-8 rounded-button text-base font-semibold bg-deep-orange text-white hover:bg-deep-orange/90 shadow-md transition-colors"
+              >
+                <Calculator className="mr-2 h-5 w-5" />
+                Try Our Calculators
+              </Link>
+              <Link
+                href="/"
+                className="inline-flex items-center justify-center h-11 px-8 rounded-button text-base border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                <Home className="mr-2 h-5 w-5" />
+                Back to Home
+              </Link>
             </div>
           </div>
         </div>

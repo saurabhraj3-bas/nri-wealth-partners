@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { TrendingUp, PieChart, FileText, Anchor, BarChart3, Shield, Building2, Activity } from "lucide-react"
@@ -148,9 +147,12 @@ export default function ServicesPage() {
               From investment advisory to tax planning, we offer a complete suite of wealth management services
               designed specifically for the Non-Resident Indian community.
             </p>
-            <Button asChild variant="cta" size="lg">
-              <Link href="/contact">Schedule Free Consultation</Link>
-            </Button>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-11 px-8 rounded-button text-base font-semibold bg-deep-orange text-white hover:bg-deep-orange/90 shadow-md transition-colors"
+            >
+              Schedule Free Consultation
+            </Link>
           </div>
         </div>
       </section>
@@ -213,9 +215,12 @@ export default function ServicesPage() {
                         </p>
                       )}
                       <div className="pt-4">
-                        <Button asChild variant="cta">
-                          <Link href="/contact">Get Started</Link>
-                        </Button>
+                        <Link
+                          href="/contact"
+                          className="inline-flex items-center justify-center h-10 px-4 py-2 rounded-button text-sm font-semibold bg-deep-orange text-white hover:bg-deep-orange/90 shadow-md transition-colors"
+                        >
+                          Get Started
+                        </Link>
                       </div>
                     </div>
                   </CardContent>
@@ -236,12 +241,18 @@ export default function ServicesPage() {
             Contact us today for a personalized consultation and discover how we can help you achieve your financial goals.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="cta" size="lg" className="bg-deep-orange hover:bg-deep-orange/90">
-              <Link href="/contact">Schedule Consultation</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="bg-white/10 border-white/30 text-white hover:bg-white/20">
-              <a href="tel:+919974742626">Call +91 9974742626</a>
-            </Button>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-11 px-8 rounded-button text-base font-semibold bg-deep-orange text-white hover:bg-deep-orange/90 shadow-md transition-colors"
+            >
+              Schedule Consultation
+            </Link>
+            <a
+              href="tel:+919974742626"
+              className="inline-flex items-center justify-center h-11 px-8 rounded-button text-base border border-white/30 bg-white/10 text-white hover:bg-white/20 transition-colors"
+            >
+              Call +91 9974742626
+            </a>
           </div>
         </div>
       </section>

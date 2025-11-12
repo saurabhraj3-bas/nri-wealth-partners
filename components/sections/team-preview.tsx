@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
 import { ArrowRight, Linkedin } from "lucide-react"
 
 const TeamPreview = () => {
@@ -67,12 +66,13 @@ const TeamPreview = () => {
         </div>
 
         <div className="text-center">
-          <Button asChild variant="outline" size="lg">
-            <Link href="/about">
-              Learn More About Our Team
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
+          <Link
+            href="/about"
+            className="inline-flex items-center justify-center h-11 px-8 rounded-button text-base border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
+            Learn More About Our Team
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
         </div>
       </div>
     </section>
