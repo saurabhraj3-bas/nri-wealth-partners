@@ -3,13 +3,18 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/navigation/header"
 import Footer from "@/components/navigation/footer"
-import CookieConsent from "@/components/cookie-consent"
-import dynamic from "next/dynamic"
+import dynamicImport from "next/dynamic"
 
-// Dynamically import FloatingActions to avoid SSR issues with event handlers
-const FloatingActions = dynamic(() => import("@/components/floating-actions"), {
+// Dynamically import components with event handlers to avoid SSR serialization issues
+const FloatingActions = dynamicImport(() => import("@/components/floating-actions"), {
   ssr: false,
 })
+const CookieConsent = dynamicImport(() => import("@/components/cookie-consent"), {
+  ssr: false,
+})
+
+// Force dynamic rendering to avoid static generation issues
+export const dynamic = 'force-dynamic'
 
 const inter = Inter({
   subsets: ["latin"],
