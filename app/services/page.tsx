@@ -1,14 +1,10 @@
-import type { Metadata } from "next"
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { TrendingUp, PieChart, FileText, Anchor, BarChart3, Shield, Building2, Activity } from "lucide-react"
-
-export const metadata: Metadata = {
-  title: "Our Services - Comprehensive Wealth Management for NRIs",
-  description: "Expert NRI investment advisory, mutual fund planning, tax compliance, retirement planning, and portfolio management services. SEBI-registered and AMFI-certified.",
-}
 
 export default function ServicesPage() {
   const services = [

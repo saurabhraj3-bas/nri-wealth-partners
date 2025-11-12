@@ -1,12 +1,8 @@
-import type { Metadata } from "next"
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, ArrowRight, Calculator, Home } from "lucide-react"
-
-export const metadata: Metadata = {
-  title: "Thank You - We'll Be In Touch Soon",
-  description: "Thank you for contacting NRI Wealth Partners. We'll respond to your inquiry within 24 hours.",
-}
 
 export default function ThankYouPage() {
   return (
