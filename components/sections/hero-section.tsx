@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { ArrowRight, Shield, TrendingUp, Award } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -37,17 +36,19 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
           >
-            <Button asChild variant="cta" size="xl">
-              <Link href="/contact">
-                Schedule Free Consultation
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="xl" className="bg-white/10 border-white/30 text-white hover:bg-white/20">
-              <Link href="/calculators">
-                Explore Calculators
-              </Link>
-            </Button>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-14 px-10 rounded-button text-base font-semibold bg-deep-orange text-white hover:bg-deep-orange/90 shadow-md transition-colors"
+            >
+              Schedule Free Consultation
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+            <Link
+              href="/calculators"
+              className="inline-flex items-center justify-center h-14 px-10 rounded-button text-base border border-white/30 bg-white/10 text-white hover:bg-white/20 transition-colors"
+            >
+              Explore Calculators
+            </Link>
           </motion.div>
 
           <motion.div
