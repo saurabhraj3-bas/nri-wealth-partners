@@ -12,6 +12,9 @@ const FloatingActions = dynamicImport(() => import("@/components/floating-action
 const CookieConsent = dynamicImport(() => import("@/components/cookie-consent"), {
   ssr: false,
 })
+const GoogleAnalytics = dynamicImport(() => import("@/components/analytics/google-analytics"), {
+  ssr: false,
+})
 
 // Force dynamic rendering - required due to Button component serialization issues
 export const dynamic = 'force-dynamic'
@@ -76,6 +79,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className={`${inter.className} antialiased`}>
+        <GoogleAnalytics />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

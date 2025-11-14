@@ -8,7 +8,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  REGION: ${{ secrets.GCP_REGION }}
+  REGION: us-central1
   SERVICE_NAME: nri-wealth-partners
 
 jobs:
