@@ -49,7 +49,7 @@ export default function ContactPage() {
                       <MapPin className="h-5 w-5 text-gold flex-shrink-0 mt-1" />
                       <div>
                         <p className="font-medium text-gray-900">Office Address</p>
-                        <p className="text-sm text-gray-600">Mumbai, Maharashtra, India</p>
+                        <p className="text-sm text-gray-600">605-Titanium One, Besides Rajpath Club,<br />S G Highway, Bodakdev,<br />Ahmedabad, Gujarat, India - 380054</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">

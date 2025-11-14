@@ -137,7 +137,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start text-gray-300 text-sm">
                 <MapPin className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5 text-gold" />
-                <span>Mumbai, Maharashtra, India</span>
+                <span>605-Titanium One, Besides Rajpath Club, S G Highway, Bodakdev, Ahmedabad, Gujarat, India - 380054</span>
               </li>
               <li className="flex items-center text-gray-300 text-sm">
                 <Phone className="h-5 w-5 mr-2 flex-shrink-0 text-gold" />
