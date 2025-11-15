@@ -21,7 +21,7 @@ steps:
       - 'gcr.io/$PROJECT_ID/nri-wealth-partners:latest'
 
   # Deploy container image to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdkinstall/google-cloud-cli'
+  - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: gcloud
     args:
       - 'run'
@@ -30,7 +30,7 @@ steps:
       - '--image'
       - 'gcr.io/$PROJECT_ID/nri-wealth-partners:$COMMIT_SHA'
       - '--region'
-      - 'us-east1'
+      - 'us-central1'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
