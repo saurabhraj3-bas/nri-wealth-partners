@@ -19,7 +19,8 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 
-# Build the application
+# Clear any existing build cache and build fresh
+RUN rm -rf .next
 RUN npm run build
 
 # Production image, copy all the files and run next
