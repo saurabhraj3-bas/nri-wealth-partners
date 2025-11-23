@@ -1,8 +1,9 @@
 steps:
-  # Build the container image
+  # Build the container image (no cache to force fresh build)
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
+      - '--no-cache'
       - '-t'
       - 'gcr.io/$PROJECT_ID/nri-wealth-partners:$COMMIT_SHA'
       - '-t'
