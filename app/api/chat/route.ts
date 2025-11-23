@@ -85,16 +85,8 @@ export async function POST(req: NextRequest) {
     let aiResponse = result.text || ''
 
     // Post-process to ensure concise responses
-    // If response is too long, take only first 2-3 sentences
-    const sentences = aiResponse.match(/[^.!?]+[.!?]+/g) || [aiResponse]
-    if (sentences.length > 3) {
-      aiResponse = sentences.slice(0, 3).join(' ')
-    }
-
-    // Remove bullet points and numbered lists for cleaner responses
+    // Only remove bold markdown, keep numbered lists and structure intact
     aiResponse = aiResponse
-      .replace(/^\s*[\*\-\•]\s+/gm, '')  // Remove bullet points
-      .replace(/^\s*\d+\.\s+/gm, '')     // Remove numbered lists
       .replace(/\*\*([^*]+)\*\*/g, '$1') // Remove bold markdown
       .trim()
 
