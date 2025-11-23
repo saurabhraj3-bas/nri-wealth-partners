@@ -2,7 +2,11 @@ import type { Metadata } from "next"
 import HeroSection from "@/components/sections/hero-section"
 import TrustMetrics from "@/components/sections/trust-metrics"
 import ServicesOverview from "@/components/sections/services-overview"
+import ProductsSection from "@/components/sections/products-section"
+import ComplianceSection from "@/components/sections/compliance-section"
+import FamilyOfficeSection from "@/components/sections/family-office-section"
 import WhyChooseUs from "@/components/sections/why-choose-us"
+import SuccessStoriesSection from "@/components/sections/success-stories-section"
 import TeamPreview from "@/components/sections/team-preview"
 import Testimonials from "@/components/sections/testimonials"
 import FinalCTA from "@/components/sections/final-cta"
@@ -18,7 +22,11 @@ export default function Home() {
       <HeroSection />
       <TrustMetrics />
       <ServicesOverview />
+      <ProductsSection />
+      <ComplianceSection />
+      <FamilyOfficeSection />
       <WhyChooseUs />
+      <SuccessStoriesSection />
       <TeamPreview />
       <Testimonials />
       <FinalCTA />

@@ -22,8 +22,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Expert Wealth Management for{" "}
-              <span className="text-gold">Non-Resident Indians</span>
+              Full-service <span className="text-gold">wealth, tax & compliance</span> solutions for NRIs worldwide
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200 font-medium">
               Trusted Financial Guidance Across Borders Since 2007

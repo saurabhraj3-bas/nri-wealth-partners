@@ -18,6 +18,26 @@ const categories = [
 const resources = [
   {
     id: 1,
+    title: "NRI Tax Guide 2024-25",
+    category: "tax",
+    type: "PDF Guide",
+    description: "Complete tax planning guide for NRIs covering DTAA, TDS, tax residency, RNOR status, and compliance requirements.",
+    icon: FileText,
+    downloadUrl: "#",
+    date: "2024-12-01",
+  },
+  {
+    id: 2,
+    title: "Repatriation Checklist for NRIs",
+    category: "guides",
+    type: "Checklist",
+    description: "Step-by-step checklist for NRIs looking to repatriate funds from India, covering RBI guidelines, documentation, and compliance.",
+    icon: FileText,
+    downloadUrl: "#",
+    date: "2024-12-01",
+  },
+  {
+    id: 3,
     title: "Complete Guide to NRI Investment in India",
     category: "guides",
     type: "PDF Guide",
@@ -27,7 +47,7 @@ const resources = [
     date: "2024-11-01",
   },
   {
-    id: 2,
+    id: 4,
     title: "Understanding Old vs New Tax Regime FY 2024-25",
     category: "tax",
     type: "PDF Guide",
@@ -37,7 +57,7 @@ const resources = [
     date: "2024-10-15",
   },
   {
-    id: 3,
+    id: 5,
     title: "NRE vs NRO Accounts: Complete Guide",
     category: "guides",
     type: "Article",
@@ -47,7 +67,7 @@ const resources = [
     date: "2024-10-01",
   },
   {
-    id: 4,
+    id: 6,
     title: "SIP Strategy for NRIs: Monthly Webinar Recording",
     category: "videos",
     type: "Video",
@@ -57,7 +77,7 @@ const resources = [
     date: "2024-09-20",
   },
   {
-    id: 5,
+    id: 7,
     title: "Q3 2024 Market Outlook & Investment Strategy",
     category: "market",
     type: "Report",
@@ -67,7 +87,7 @@ const resources = [
     date: "2024-09-01",
   },
   {
-    id: 6,
+    id: 8,
     title: "Retirement Planning for NRIs",
     category: "guides",
     type: "PDF Guide",
@@ -77,7 +97,7 @@ const resources = [
     date: "2024-08-15",
   },
   {
-    id: 7,
+    id: 9,
     title: "Currency Impact on NRI Investments",
     category: "market",
     type: "Article",
@@ -87,7 +107,7 @@ const resources = [
     date: "2024-08-01",
   },
   {
-    id: 8,
+    id: 10,
     title: "Tax Planning Webinar for NRIs",
     category: "tax",
     type: "Video",
@@ -97,7 +117,7 @@ const resources = [
     date: "2024-07-15",
   },
   {
-    id: 9,
+    id: 11,
     title: "Mutual Fund Selection Framework",
     category: "guides",
     type: "Checklist",

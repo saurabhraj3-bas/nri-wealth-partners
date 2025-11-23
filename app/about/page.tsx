@@ -62,19 +62,19 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <Card>
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold text-navy mb-4">Our Mission</h2>
+                <h2 className="text-2xl font-bold text-navy mb-4">Our Vision</h2>
                 <p className="text-gray-700 leading-relaxed">
-                  To empower Non-Resident Indians to build and preserve wealth across borders through expert financial guidance,
-                  transparent communication, and personalized strategies that align with their unique needs and goals.
+                  To be the most trusted financial partner for the global Indian diaspora, known for exceptional service,
+                  deep expertise, and unwavering commitment to our clients' financial success.
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold text-navy mb-4">Our Vision</h2>
+                <h2 className="text-2xl font-bold text-navy mb-4">Our Mission</h2>
                 <p className="text-gray-700 leading-relaxed">
-                  To be the most trusted financial partner for the global Indian diaspora, known for exceptional service,
-                  deep expertise, and unwavering commitment to our clients' financial success.
+                  To empower Non-Resident Indians to build and preserve wealth across borders through expert financial guidance,
+                  transparent communication, and personalized strategies that align with their unique needs and goals.
                 </p>
               </CardContent>
             </Card>
@@ -110,7 +110,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-navy text-center mb-4">Meet Our Expert Team</h2>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Led by seasoned professionals with decades of combined experience in wealth management and financial advisory
+            We are a young, energetic team working across tax, investments and compliance. Led by seasoned professionals with decades of combined experience in wealth management and financial advisory, we bring a fresh perspective to managing your global wealth.
           </p>
 
           {/* Anil Parekh */}

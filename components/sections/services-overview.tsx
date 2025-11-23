@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { TrendingUp, PieChart, FileText, Anchor, BarChart3, Shield, Building2, Activity, ArrowRight } from "lucide-react"
+import { TrendingUp, PieChart, FileText, Anchor, BarChart3, Shield, Building2, Activity, ArrowRight, Plane } from "lucide-react"
 
 const ServicesOverview = () => {
   const services = [
@@ -42,6 +42,12 @@ const ServicesOverview = () => {
       title: "Estate Planning",
       description: "Secure wealth transfer and succession planning for your family's future.",
       link: "/services#estate",
+    },
+    {
+      icon: Plane,
+      title: "Moving Back to India",
+      description: "Complete relocation advisory for NRIs with tax, investments, RNOR status, and repatriation.",
+      link: "/services#moving-back",
     },
   ]
 

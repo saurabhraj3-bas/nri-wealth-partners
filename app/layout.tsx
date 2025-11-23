@@ -9,6 +9,9 @@ import dynamicImport from "next/dynamic"
 const FloatingActions = dynamicImport(() => import("@/components/floating-actions"), {
   ssr: false,
 })
+const AIChatbot = dynamicImport(() => import("@/components/ai-chatbot-enhanced"), {
+  ssr: false,
+})
 const CookieConsent = dynamicImport(() => import("@/components/cookie-consent"), {
   ssr: false,
 })
@@ -84,6 +87,7 @@ export default function RootLayout({
         <main className="min-h-screen">{children}</main>
         <Footer />
         <FloatingActions />
+        <AIChatbot />
         <CookieConsent />
       </body>
     </html>
