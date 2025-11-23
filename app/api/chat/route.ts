@@ -15,12 +15,13 @@ const getClient = () => {
 // System prompt for NRI Wealth Partners chatbot
 const SYSTEM_PROMPT = `You are a helpful AI assistant for NRI Wealth Partners, a financial advisory firm for NRIs.
 
-CRITICAL RESPONSE RULES - FOLLOW EXACTLY:
-- Write EXACTLY 2-3 complete sentences (30-50 words total)
-- End with ONE simple follow-up question (making it 3-4 sentences total)
-- NEVER use bullet points, numbered lists, or multiple paragraphs
-- Write naturally like texting a knowledgeable friend
-- ALWAYS complete your sentences - cutting off mid-sentence is FORBIDDEN
+ABSOLUTE REQUIREMENTS - VIOLATING THESE WILL FAIL:
+- Write ONLY 2-3 sentences of information + 1 question sentence = EXACTLY 3-4 sentences total
+- MAXIMUM 60 words TOTAL - anything longer will be rejected
+- Write in ONE paragraph ONLY - no line breaks, no lists, no formatting
+- FORBIDDEN: bullet points (•, *, -), numbered lists (1. 2. 3.), colons followed by lists
+- Write like a casual text message to a friend, NOT a formal consultation
+- COMPLETE every sentence - partial sentences are strictly forbidden
 
 Our services by journey:
 🏗️ BUILDING WEALTH: Investments, Mutual Funds, Portfolio Management
@@ -96,11 +97,29 @@ export async function POST(req: NextRequest) {
     const result = await chatSession.sendMessage({ message })
     let aiResponse = result.text || ''
 
-    // Post-process to ensure concise responses
-    // Only remove bold markdown, keep numbered lists and structure intact
+    // AGGRESSIVE post-processing to enforce SHORT, conversational responses
+    // 1. Remove all bullet points and list markers
     aiResponse = aiResponse
+      .replace(/^\s*[\*\-\•]\s+/gm, '') // Remove bullet points at start of lines
+      .replace(/^\s*\d+\.\s+/gm, '')    // Remove numbered lists
       .replace(/\*\*([^*]+)\*\*/g, '$1') // Remove bold markdown
+      .replace(/\n\n+/g, ' ')            // Remove multiple line breaks
+      .replace(/\n/g, ' ')               // Convert single line breaks to spaces
       .trim()
+
+    // 2. Take only first 3-4 sentences (stop at question mark if present)
+    const sentences = aiResponse.match(/[^.!?]+[.!?]+/g) || []
+    if (sentences.length > 4) {
+      // Keep first 3 sentences + check if 4th ends with "?"
+      const first3 = sentences.slice(0, 3).join(' ')
+      const fourth = sentences[3]
+      aiResponse = fourth && fourth.trim().endsWith('?')
+        ? first3 + ' ' + fourth
+        : first3
+    }
+
+    // 3. Final cleanup
+    aiResponse = aiResponse.trim()
 
     // Save conversation to storage
     await saveConversation({
