@@ -108,13 +108,16 @@ export async function POST(req: NextRequest) {
     let aiResponse = result.text || ''
 
     // AGGRESSIVE post-processing to enforce SHORT, conversational responses
-    // 1. Remove all bullet points and list markers
+    // 1. Remove all bullet points and list markers (both at line start AND inline)
     aiResponse = aiResponse
-      .replace(/^\s*[\*\-\•]\s+/gm, '') // Remove bullet points at start of lines
-      .replace(/^\s*\d+\.\s+/gm, '')    // Remove numbered lists
-      .replace(/\*\*([^*]+)\*\*/g, '$1') // Remove bold markdown
-      .replace(/\n\n+/g, ' ')            // Remove multiple line breaks
-      .replace(/\n/g, ' ')               // Convert single line breaks to spaces
+      .replace(/^\s*[\*\-\•]\s+/gm, '')    // Remove bullet points at start of lines
+      .replace(/^\s*\d+\.\s+/gm, '')       // Remove numbered lists at start of lines
+      .replace(/\s+\d+\.\s*/g, ' ')        // Remove numbered lists INLINE (space before, optional space after)
+      .replace(/:\s*\d+\.\s*/g, ': ')      // Remove numbered lists after colons (even at end: ": 1.")
+      .replace(/\*\*([^*]+)\*\*/g, '$1')   // Remove bold markdown
+      .replace(/\n\n+/g, ' ')              // Remove multiple line breaks
+      .replace(/\n/g, ' ')                 // Convert single line breaks to spaces
+      .replace(/:\s*$/g, '.')              // Replace trailing ": " with "." to complete sentence
       .trim()
 
     // 2. Take only first 3-4 sentences (stop at question mark if present)
