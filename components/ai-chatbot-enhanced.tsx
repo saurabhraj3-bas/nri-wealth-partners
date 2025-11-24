@@ -62,7 +62,7 @@ export default function AIChatbotEnhanced({ className }: AIChatbotProps) {
     setMessages([
       {
         role: "assistant",
-        content: `Welcome! I'm your NRI Wealth Assistant. I can help you with questions about:\n\n• Investment planning for NRIs\n• Tax compliance and planning\n• FEMA, FATCA, and CRS regulations\n• GIFT City and alternative investments\n• Moving back to India\n• Retirement and estate planning\n\nHow can I assist you today?`,
+        content: `Welcome! I'm your NRI Wealth Assistant from NRI Wealth Partners. I can help with investments, tax planning, GIFT City, compliance (FEMA/FATCA/CRS), moving back to India, and retirement planning. What would you like to discuss?`,
         timestamp: new Date().toISOString()
       }
     ])
