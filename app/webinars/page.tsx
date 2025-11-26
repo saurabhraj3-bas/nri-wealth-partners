@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { WebinarRegistrationModal } from "@/components/webinar-registration-modal"
 
 // Sample data - Replace with your actual Google Sheets data
 const upcomingWebinars = [
@@ -138,6 +139,13 @@ const timezones = [
 
 export default function WebinarsPage() {
   const [selectedTimezone, setSelectedTimezone] = useState("EST")
+  const [selectedWebinar, setSelectedWebinar] = useState<typeof upcomingWebinars[0] | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleRegisterClick = (webinar: typeof upcomingWebinars[0]) => {
+    setSelectedWebinar(webinar)
+    setIsModalOpen(true)
+  }
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -287,11 +295,14 @@ export default function WebinarsPage() {
                   </div>
 
                   {/* CTA */}
-                  <Button asChild variant="cta" className="w-full" size="lg">
-                    <a href={webinar.registrationLink} target="_blank" rel="noopener noreferrer">
-                      <Bell className="h-4 w-4 mr-2" />
-                      Register Now
-                    </a>
+                  <Button
+                    variant="cta"
+                    className="w-full"
+                    size="lg"
+                    onClick={() => handleRegisterClick(webinar)}
+                  >
+                    <Bell className="h-4 w-4 mr-2" />
+                    Register Now
                   </Button>
                 </CardContent>
               </Card>
@@ -453,6 +464,15 @@ export default function WebinarsPage() {
           </div>
         </div>
       </section>
+
+      {/* Webinar Registration Modal */}
+      {selectedWebinar && (
+        <WebinarRegistrationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          webinar={selectedWebinar}
+        />
+      )}
     </div>
   )
 }
