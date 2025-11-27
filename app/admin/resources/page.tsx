@@ -32,7 +32,7 @@ export default async function ResourceManagementPage() {
     const session = await auth()
 
     if (!session?.user) {
-      redirect("/admin/login")
+      redirect("/auth/admin")
     }
 
     // Check permissions

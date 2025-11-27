@@ -15,7 +15,7 @@ export default async function TeamManagementPage() {
     const session = await auth()
 
     if (!session?.user) {
-      redirect("/admin/login")
+      redirect("/auth/admin")
     }
 
     // Only super admins can access team management

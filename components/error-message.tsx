@@ -1,3 +1,5 @@
+"use client"
+
 import { AlertCircle, RefreshCw, Home, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"

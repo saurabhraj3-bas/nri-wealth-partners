@@ -28,7 +28,7 @@ export default async function AdminDashboardPage() {
     const session = await auth()
 
     if (!session?.user) {
-      redirect("/admin/login")
+      redirect("/auth/admin")
     }
 
     return (
@@ -190,7 +190,7 @@ export default async function AdminDashboardPage() {
     )
   } catch (error) {
     console.error("❌ Dashboard error:", error)
-    redirect("/admin/login")
+    redirect("/auth/admin")
   }
 }
 
