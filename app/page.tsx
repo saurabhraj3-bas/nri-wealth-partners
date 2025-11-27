@@ -7,6 +7,7 @@ import ComplianceSection from "@/components/sections/compliance-section"
 import FamilyOfficeSection from "@/components/sections/family-office-section"
 import WhyChooseUs from "@/components/sections/why-choose-us"
 import SuccessStoriesSection from "@/components/sections/success-stories-section"
+import NewsletterWidget from "@/components/newsletter-widget"
 import TeamPreview from "@/components/sections/team-preview"
 import Testimonials from "@/components/sections/testimonials"
 import FinalCTA from "@/components/sections/final-cta"
@@ -27,6 +28,7 @@ export default function Home() {
       <FamilyOfficeSection />
       <WhyChooseUs />
       <SuccessStoriesSection />
+      <NewsletterWidget />
       <TeamPreview />
       <Testimonials />
       <FinalCTA />

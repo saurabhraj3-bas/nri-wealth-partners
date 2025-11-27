@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer'
 import fs from 'fs'
 import path from 'path'
 import { analyzeConversation, type ConversationRecord } from '@/lib/chatbot-analytics'
+import { findRelevantKnowledge } from '@/lib/chatbot-knowledge-base'
 
 // Initialize Google GenAI client (new unified SDK for Gemini 2.0+)
 const getClient = () => {
@@ -77,6 +78,20 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Find relevant knowledge base entries for this query
+    const relevantKnowledge = findRelevantKnowledge(message, 3)
+
+    // Build enhanced system prompt with relevant knowledge
+    let enhancedPrompt = SYSTEM_PROMPT
+
+    if (relevantKnowledge.length > 0) {
+      enhancedPrompt += `\n\nRELEVANT KNOWLEDGE BASE (Use these approved responses as guidance):\n\n`
+      relevantKnowledge.forEach((entry, idx) => {
+        enhancedPrompt += `${idx + 1}. Q: ${entry.question}\n   A: ${entry.suggestedResponse}\n\n`
+      })
+      enhancedPrompt += `If the user's question matches any of the above, use the approved response as your primary answer while maintaining the conversational tone and 60-word limit.`
+    }
+
     // Build chat history for context
     const chatHistory = conversationHistory?.map((msg: any) => ({
       role: msg.role === 'user' ? 'user' : 'model',
@@ -93,7 +108,7 @@ export async function POST(req: NextRequest) {
     // - gemini-2.5-flash: Newest with thinking ($0.30 input, $2.50 output)
     const chatSession = client.chats.create({
       model: 'gemini-2.0-flash',
-      systemInstruction: SYSTEM_PROMPT,
+      systemInstruction: enhancedPrompt,
       history: chatHistory,
       config: {
         maxOutputTokens: 150,  // Enough for 3-4 complete sentences (~60-80 words)

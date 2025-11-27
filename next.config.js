@@ -79,6 +79,36 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: false,
   },
+
+  // Webpack configuration to handle node: protocol
+  webpack: (config, { isServer }) => {
+    // Handle node: protocol imports by aliasing to the actual module name
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'node:process': 'process',
+      'node:buffer': 'buffer',
+      'node:stream': 'stream-browserify',
+    }
+
+    // Fallback for Node.js built-in modules on client side
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        stream: false,
+        http: false,
+        https: false,
+        zlib: false,
+        path: false,
+        os: false,
+      }
+    }
+
+    return config
+  },
 }
 
 module.exports = nextConfig

@@ -1,0 +1,232 @@
+{
+  "contentSources": [
+    {
+      "name": "Google News - NRI Success Stories",
+      "url": "https://news.google.com/rss/search?q=NRI+success+OR+Indian+diaspora+achievements&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "success",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 20,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - NRI Compliance & Regulations",
+      "url": "https://news.google.com/rss/search?q=NRI+FEMA+OR+FATCA+OR+tax+compliance+OR+RBI+regulations&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "regulatory",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 20,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - India Regulatory Changes",
+      "url": "https://news.google.com/rss/search?q=India+regulatory+changes+OR+RBI+policy+OR+income+tax+NRI&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "regulatory",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 15,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - NRI Financial & Investment",
+      "url": "https://news.google.com/rss/search?q=NRI+investment+OR+Indian+stock+market+OR+rupee+exchange+rate&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 20,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - India Economy Impact on NRIs",
+      "url": "https://news.google.com/rss/search?q=India+economy+OR+Indian+rupee+OR+India+GDP+growth&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 15,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - Global Indian Community",
+      "url": "https://news.google.com/rss/search?q=Indian+diaspora+OR+NRI+community+OR+Indian+expats&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "community",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 15,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - US Tax & NRI",
+      "url": "https://news.google.com/rss/search?q=US+tax+India+OR+IRS+foreign+income+OR+FATCA&hl=en-US&gl=US&ceid=US:en",
+      "type": "google_news",
+      "category": "regulatory",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 10,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - UK-India Relations & NRI",
+      "url": "https://news.google.com/rss/search?q=UK+India+relations+OR+British+Indian+community&hl=en-GB&gl=GB&ceid=GB:en",
+      "type": "google_news",
+      "category": "community",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 10,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - UAE-India & NRI",
+      "url": "https://news.google.com/rss/search?q=UAE+India+OR+Dubai+Indian+expats+OR+Gulf+NRI&hl=en-AE&gl=AE&ceid=AE:en",
+      "type": "google_news",
+      "category": "community",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 10,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Economic Times - NRI",
+      "url": "https://economictimes.indiatimes.com/nri.cms?service=rss",
+      "type": "rss",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 15,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Economic Times - Markets",
+      "url": "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
+      "type": "rss",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 15,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Moneycontrol - Personal Finance",
+      "url": "https://www.moneycontrol.com/rss/personalfinance.xml",
+      "type": "rss",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 10,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Bloomberg - India Markets",
+      "url": "https://feeds.bloomberg.com/markets/news.rss",
+      "type": "rss",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 10,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Reuters - India Business",
+      "url": "https://www.reuters.com/places/india/feed",
+      "type": "rss",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 10,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - Financial Times India",
+      "url": "https://news.google.com/rss/search?q=site:ft.com+India+economy+OR+India+markets&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 5,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - GIFT City",
+      "url": "https://news.google.com/rss/search?q=GIFT+City+OR+Gujarat+International+Finance+Tec-City&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "financial",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 5,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - Indian Entrepreneurs Global",
+      "url": "https://news.google.com/rss/search?q=Indian+entrepreneur+success+OR+Indian+startup+founder+global&hl=en-US&gl=US&ceid=US:en",
+      "type": "google_news",
+      "category": "success",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 10,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - Indians in Tech",
+      "url": "https://news.google.com/rss/search?q=Indian+CEO+OR+Indian+tech+leader+Silicon+Valley&hl=en-US&gl=US&ceid=US:en",
+      "type": "google_news",
+      "category": "success",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 10,
+        "parseRules": {}
+      }
+    },
+    {
+      "name": "Google News - NRI Retirement & Moving Back",
+      "url": "https://news.google.com/rss/search?q=NRI+returning+India+OR+retirement+in+India&hl=en-IN&gl=IN&ceid=IN:en",
+      "type": "google_news",
+      "category": "community",
+      "active": true,
+      "config": {
+        "fetchFrequency": "daily",
+        "maxArticlesPerFetch": 5,
+        "parseRules": {}
+      }
+    }
+  ]
+}
