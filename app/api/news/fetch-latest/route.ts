@@ -8,50 +8,104 @@ import { getFirestoreDb } from '@/lib/firebase-admin'
  * News is populated by Cloud Functions that collect from RSS feeds.
  */
 
+// Sample news for when Firebase isn't configured
+const SAMPLE_NEWS = [
+  {
+    id: 'sample-1',
+    title: 'Tax Planning Guide for NRIs - 2025 Edition',
+    description: 'Complete guide to tax planning strategies for Non-Resident Indians including DTAA benefits, TDS rates, and filing requirements.',
+    category: 'tax',
+    source: 'NRI Wealth Partners',
+    url: '/resources',
+    publishedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    imageUrl: null,
+    tags: ['tax', 'planning', 'compliance'],
+  },
+  {
+    id: 'sample-2',
+    title: 'Latest Immigration Updates for Indian Citizens',
+    description: 'Recent changes in visa regulations, OCI card updates, and PIO status guidelines affecting NRIs worldwide.',
+    category: 'immigration',
+    source: 'NRI Wealth Partners',
+    url: '/resources',
+    publishedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    imageUrl: null,
+    tags: ['immigration', 'visa', 'oci'],
+  },
+  {
+    id: 'sample-3',
+    title: 'Investment Strategies for Repatriable Accounts',
+    description: 'Learn about NRE and NRO account differences, best investment options, and repatriation rules for NRIs.',
+    category: 'investment',
+    source: 'NRI Wealth Partners',
+    url: '/resources',
+    publishedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    imageUrl: null,
+    tags: ['investment', 'nre', 'nro'],
+  },
+]
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams
     const days = parseInt(searchParams.get('days') || '7')
 
-    // Calculate date threshold
-    const dateThreshold = new Date()
-    dateThreshold.setDate(dateThreshold.getDate() - days)
+    // Check if Firebase is configured
+    const firebaseConfigured = process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== ''
 
-    const db = getFirestoreDb()
+    let articles = []
 
-    // Fetch news articles from the last N days
-    const newsSnapshot = await db
-      .collection('news')
-      .where('publishedAt', '>=', dateThreshold)
-      .where('status', '==', 'published')
-      .orderBy('publishedAt', 'desc')
-      .limit(100)
-      .get()
+    if (firebaseConfigured) {
+      try {
+        // Calculate date threshold
+        const dateThreshold = new Date()
+        dateThreshold.setDate(dateThreshold.getDate() - days)
 
-    const articles = newsSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-      publishedAt: doc.data().publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-      createdAt: doc.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-    }))
+        const db = getFirestoreDb()
+
+        // Fetch news articles from the last N days
+        const newsSnapshot = await db
+          .collection('news')
+          .where('publishedAt', '>=', dateThreshold)
+          .where('status', '==', 'published')
+          .orderBy('publishedAt', 'desc')
+          .limit(100)
+          .get()
+
+        articles = newsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          publishedAt: doc.data().publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+          createdAt: doc.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+        }))
+      } catch (fbError) {
+        console.error('Firebase error, falling back to sample news:', fbError)
+        articles = SAMPLE_NEWS
+      }
+    } else {
+      // Firebase not configured - return sample news
+      console.log('ℹ️ Firebase not configured, returning sample news')
+      articles = SAMPLE_NEWS
+    }
 
     return NextResponse.json({
       success: true,
       articles,
       count: articles.length,
       daysRange: days,
+      isLiveData: firebaseConfigured && articles.length > 0 && articles !== SAMPLE_NEWS,
     })
 
   } catch (error: any) {
     console.error('Fetch news error:', error)
-    return NextResponse.json(
-      {
-        error: 'Failed to fetch news',
-        details: error.message,
-        articles: [],
-      },
-      { status: 500 }
-    )
+    // Return sample news instead of error
+    return NextResponse.json({
+      success: true,
+      articles: SAMPLE_NEWS,
+      count: SAMPLE_NEWS.length,
+      daysRange: 7,
+      isLiveData: false,
+    })
   }
 }
 
