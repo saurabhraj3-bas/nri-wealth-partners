@@ -52,8 +52,8 @@ const Header = () => {
         { name: "Education Planner", href: "/calculators#calc-education" },
       ],
     },
-    { name: "Insights", href: "/insights" },
-    { name: "News", href: "/news" },
+    { name: "Newsletter", href: "/insights" },
+    { name: "News Feed", href: "/news" },
     { name: "Resources", href: "/resources" },
     { name: "Webinars", href: "/webinars" },
   ]

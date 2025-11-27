@@ -156,6 +156,54 @@ export const chatbotKnowledgeBase: KnowledgeBaseEntry[] = [
     question: 'What happens if the markets are very volatile — what risk management strategies do you use for NRIs?',
     suggestedResponse: 'We manage volatility through diversification, disciplined asset allocation and regular rebalancing. For NRIs, we also account for currency and repatriation risks to keep the strategy aligned with your comfort level.',
     category: 'Risk Management'
+  },
+  {
+    id: 'Q25',
+    question: 'Do you have a newsletter? How can I subscribe to get insights and updates?',
+    suggestedResponse: 'Yes! We publish a weekly AI-curated newsletter covering success stories, regulatory updates, financial insights, and community news. You can subscribe at /insights/subscribe. It\'s free, and we scan 200+ articles weekly to bring you only the most relevant insights for NRIs.',
+    category: 'Newsletter'
+  },
+  {
+    id: 'Q26',
+    question: 'What is the difference between your Newsletter and News Feed?',
+    suggestedResponse: 'Our Newsletter (/insights) is a weekly AI-curated digest with expert summaries and analysis delivered to your inbox. The News Feed (/news) provides real-time breaking news from official sources like USCIS, IRS, RBI, and Bloomberg. Newsletter is for deep reading, News Feed is for quick daily updates.',
+    category: 'Newsletter'
+  },
+  {
+    id: 'Q27',
+    question: 'Where can I find resources, guides, or downloadable PDFs about NRI topics?',
+    suggestedResponse: 'Visit our Resources page (/resources) where you can download comprehensive guides, tax checklists, investment playbooks, immigration guides, and market insights. All resources are categorized by topic (tax, investment, immigration, etc.) and available as PDFs.',
+    category: 'Resources'
+  },
+  {
+    id: 'Q28',
+    question: 'Do you offer webinars or educational sessions for NRIs?',
+    suggestedResponse: 'Yes, we host regular webinars on NRI tax filing, investment strategies, immigration planning, and more. Visit /webinars to see upcoming sessions and register. Past webinar recordings are also available for registered attendees.',
+    category: 'Webinars'
+  },
+  {
+    id: 'Q29',
+    question: 'What topics does your newsletter cover?',
+    suggestedResponse: 'Our newsletter covers four key areas: (1) Success Stories - real NRI wealth journeys, (2) Regulatory Updates - FEMA, tax law changes, compliance, (3) Financial Insights - market trends, investment opportunities, (4) Community News - NRI diaspora events and initiatives. Subscribe at /insights/subscribe.',
+    category: 'Newsletter'
+  },
+  {
+    id: 'Q30',
+    question: 'How do I stay updated with the latest immigration, tax, and investment news for NRIs?',
+    suggestedResponse: 'We offer two ways: (1) Subscribe to our weekly Newsletter (/insights/subscribe) for curated analysis and summaries, (2) Check our News Feed (/news) daily for real-time updates from USCIS, IRS, RBI, Bloomberg, and other trusted sources. You can filter news by category (immigration, tax, investment, market).',
+    category: 'News'
+  },
+  {
+    id: 'Q31',
+    question: 'Can I download guides or checklists for specific topics like tax filing or investment?',
+    suggestedResponse: 'Absolutely! Our Resources page (/resources) offers downloadable PDFs including: NRI Tax Filing Guide, Investment Playbook, Immigration Planning Checklist, Retirement Planning Guide, FBAR Reporting Guide, and more. All resources are free to download.',
+    category: 'Resources'
+  },
+  {
+    id: 'Q32',
+    question: 'How often do you publish new content, articles, or resources?',
+    suggestedResponse: 'We publish a weekly newsletter every Monday with 10-15 curated articles. Our News Feed updates daily with breaking news. New resources (guides, checklists, PDFs) are added monthly. We also host 2 webinars per month on rotating topics.',
+    category: 'Content'
   }
 ];
 
@@ -193,6 +241,18 @@ export function findRelevantKnowledge(userQuery: string, maxResults: number = 3)
     }
     if (queryLower.includes('repatriate') || queryLower.includes('nre') || queryLower.includes('nro')) {
       if (entry.category === 'Repatriation') score += 20;
+    }
+    if (queryLower.includes('newsletter') || queryLower.includes('subscribe') || queryLower.includes('insights')) {
+      if (entry.category === 'Newsletter') score += 20;
+    }
+    if (queryLower.includes('news') || queryLower.includes('updates') || queryLower.includes('breaking')) {
+      if (entry.category === 'News' || entry.category === 'Content') score += 20;
+    }
+    if (queryLower.includes('resource') || queryLower.includes('guide') || queryLower.includes('pdf') || queryLower.includes('download')) {
+      if (entry.category === 'Resources') score += 20;
+    }
+    if (queryLower.includes('webinar') || queryLower.includes('seminar') || queryLower.includes('session') || queryLower.includes('event')) {
+      if (entry.category === 'Webinars') score += 20;
     }
 
     return { entry, score };

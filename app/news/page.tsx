@@ -260,19 +260,60 @@ export default function NewsPage() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
-      <section className="py-16 bg-gradient-to-br from-navy via-navy/95 to-blue-900 text-white">
+      {/* More Ways to Stay Informed */}
+      <section className="py-16 bg-gray-50 border-t border-gray-200">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Get News Delivered to Your Inbox
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+              Want Deeper Analysis?
             </h2>
-            <p className="text-xl text-gray-200 mb-8">
-              Subscribe to receive curated news updates and insights weekly
+            <p className="text-lg text-gray-600">
+              Go beyond breaking news with our curated resources
             </p>
-            <Button asChild variant="cta" size="lg">
-              <Link href="/insights/subscribe">Subscribe to Newsletter</Link>
-            </Button>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Newsletter Promotion */}
+            <div className="bg-white border-2 border-blue-200 hover:border-blue-400 transition-colors rounded-xl p-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                  <Newspaper className="h-6 w-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-navy">Weekly Newsletter</h3>
+                  <span className="text-xs text-blue-600 font-semibold">📧 Every Monday</span>
+                </div>
+              </div>
+              <p className="text-gray-600 mb-6">
+                Get AI-curated weekly summaries with expert analysis delivered to your inbox. We scan 200+ articles so you don't have to.
+              </p>
+              <Button asChild variant="cta" className="w-full">
+                <Link href="/insights/subscribe">
+                  Subscribe Free
+                </Link>
+              </Button>
+            </div>
+
+            {/* Resources Promotion */}
+            <div className="bg-white border-2 border-green-200 hover:border-green-400 transition-colors rounded-xl p-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                  <Globe className="h-6 w-6 text-green-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-navy">Resources</h3>
+                  <span className="text-xs text-green-600 font-semibold">📥 Free Downloads</span>
+                </div>
+              </div>
+              <p className="text-gray-600 mb-6">
+                Download comprehensive PDF guides, tax checklists, and investment playbooks. Evergreen content you can reference anytime.
+              </p>
+              <Button asChild variant="outline" className="w-full">
+                <Link href="/resources">
+                  Browse Resources
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

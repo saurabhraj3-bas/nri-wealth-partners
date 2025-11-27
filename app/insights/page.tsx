@@ -22,9 +22,9 @@ import {
 import type { Newsletter, CuratedArticle } from '@/lib/newsletter-helpers'
 
 export const metadata = {
-  title: 'Insights & Newsletter Archive',
-  description: 'Stay informed with curated insights on NRI wealth management, tax planning, investments, and financial regulations. Expert analysis delivered weekly.',
-  keywords: ['NRI news', 'financial insights', 'investment newsletter', 'tax updates', 'NRI regulations']
+  title: 'NRI Weekly Newsletter - AI-Curated Wealth Insights',
+  description: 'AI-curated weekly digest for NRIs covering success stories, regulatory updates, financial insights, and community news. Expert analysis delivered every Monday. Subscribe free!',
+  keywords: ['NRI newsletter', 'weekly digest', 'financial insights', 'investment newsletter', 'tax updates', 'NRI regulations', 'curated news']
 }
 
 async function NewsletterList() {
@@ -345,6 +345,68 @@ export default function InsightsPage() {
                 ✓ No spam ✓ Unsubscribe anytime ✓ Privacy protected
               </span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* More Ways to Stay Informed */}
+      <section className="py-16 bg-white border-t border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+              More Ways to Stay Informed
+            </h2>
+            <p className="text-lg text-gray-600">
+              Beyond our weekly newsletter, explore other resources to stay updated
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* News Feed Promotion */}
+            <Card className="border-2 border-blue-200 hover:border-blue-400 transition-colors">
+              <CardContent className="p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <Newspaper className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-navy">News Feed</h3>
+                    <span className="text-xs text-blue-600 font-semibold">⚡ Updated Daily</span>
+                  </div>
+                </div>
+                <p className="text-gray-600 mb-6">
+                  Need breaking updates between newsletters? Check our News Feed for real-time news from USCIS, IRS, RBI, and Bloomberg.
+                </p>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/news">
+                    View News Feed <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Resources Promotion */}
+            <Card className="border-2 border-green-200 hover:border-green-400 transition-colors">
+              <CardContent className="p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <Globe2 className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-navy">Resources</h3>
+                    <span className="text-xs text-green-600 font-semibold">📥 Free Downloads</span>
+                  </div>
+                </div>
+                <p className="text-gray-600 mb-6">
+                  Download comprehensive guides, tax checklists, and investment playbooks. All our resources are free PDFs you can save and share.
+                </p>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/resources">
+                    Browse Resources <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
