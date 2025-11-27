@@ -47,31 +47,35 @@ export default async function AdminDashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatsCard
             title="Total Subscribers"
-            value="0"
+            value="Coming Soon"
             icon={Users}
-            change="+0 this week"
-            href="/admin/subscribers"
+            change="Newsletter system"
+            href="/admin"
+            disabled={true}
           />
           <StatsCard
             title="Newsletters Sent"
-            value="0"
+            value="Coming Soon"
             icon={Mail}
-            change="None yet"
-            href="/admin/newsletters"
+            change="Newsletter system"
+            href="/admin"
+            disabled={true}
           />
           <StatsCard
             title="Curated Articles"
-            value="0"
+            value="Coming Soon"
             icon={FileText}
-            change="Ready to use"
-            href="/admin/articles"
+            change="Newsletter system"
+            href="/admin"
+            disabled={true}
           />
           <StatsCard
             title="Average Open Rate"
-            value="0%"
+            value="Coming Soon"
             icon={TrendingUp}
-            change="No data yet"
-            href="/admin/analytics"
+            change="Newsletter system"
+            href="/admin"
+            disabled={true}
           />
         </div>
 
@@ -162,28 +166,31 @@ export default async function AdminDashboardPage() {
           {/* Newsletter */}
           <QuickActionCard
             title="Create Newsletter"
-            description="Start a new newsletter draft"
+            description="Newsletter system - Coming Soon"
             icon={Mail}
-            href="/admin/newsletters/new"
-            disabled={!session.user.permissions.draftNewsletter}
+            href="/admin"
+            disabled={true}
+            comingSoon={true}
           />
 
           {/* Subscribers */}
           <QuickActionCard
             title="View Subscribers"
-            description="Manage your subscriber list"
+            description="Newsletter system - Coming Soon"
             icon={Users}
-            href="/admin/subscribers"
-            disabled={!session.user.permissions.manageSubscribers}
+            href="/admin"
+            disabled={true}
+            comingSoon={true}
           />
 
           {/* Content Sources */}
           <QuickActionCard
             title="Content Sources"
-            description="Manage RSS feeds and sources"
+            description="Newsletter system - Coming Soon"
             icon={Rss}
-            href="/admin/sources"
-            disabled={!session.user.permissions.draftNewsletter}
+            href="/admin"
+            disabled={true}
+            comingSoon={true}
           />
         </div>
       </div>
@@ -199,14 +206,33 @@ function StatsCard({
   value,
   icon: Icon,
   change,
-  href
+  href,
+  disabled
 }: {
   title: string
   value: string
   icon: React.ComponentType<{ className?: string }>
   change: string
   href: string
+  disabled?: boolean
 }) {
+  if (disabled) {
+    return (
+      <Card className="opacity-60 cursor-not-allowed">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
+              <Icon className="h-6 w-6 text-gray-400" />
+            </div>
+          </div>
+          <h3 className="text-2xl font-bold text-gray-400 mb-1">{value}</h3>
+          <p className="text-sm font-medium text-gray-500 mb-1">{title}</p>
+          <p className="text-xs text-gray-400">{change}</p>
+        </CardContent>
+      </Card>
+    )
+  }
+
   return (
     <Link href={href}>
       <Card className="hover:shadow-lg transition-shadow cursor-pointer">
@@ -266,13 +292,15 @@ function QuickActionCard({
   description,
   icon: Icon,
   href,
-  disabled
+  disabled,
+  comingSoon
 }: {
   title: string
   description: string
   icon: React.ComponentType<{ className?: string }>
   href: string
   disabled?: boolean
+  comingSoon?: boolean
 }) {
   if (disabled) {
     return (
@@ -281,7 +309,7 @@ function QuickActionCard({
           <Icon className="h-8 w-8 text-gray-400 mb-3" />
           <h3 className="font-semibold text-gray-500 mb-1">{title}</h3>
           <p className="text-sm text-gray-400">{description}</p>
-          <p className="text-xs text-gray-400 mt-2">No permission</p>
+          <p className="text-xs text-gray-400 mt-2">{comingSoon ? "Coming Soon" : "No permission"}</p>
         </CardContent>
       </Card>
     )
