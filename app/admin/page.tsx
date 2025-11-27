@@ -18,7 +18,8 @@ import {
   AlertCircle,
   Video,
   FolderOpen,
-  UserCog
+  UserCog,
+  Sparkles
 } from "lucide-react"
 import Link from "next/link"
 
@@ -146,6 +147,15 @@ export default async function AdminDashboardPage() {
             description="Upload PDFs and resources"
             icon={FolderOpen}
             href="/admin/resources"
+            disabled={!session.user.permissions.draftNewsletter && !session.user.permissions.manageWebinars}
+          />
+
+          {/* Content Generator */}
+          <QuickActionCard
+            title="AI Content Generator"
+            description="Generate blog posts and PDF guides with AI"
+            icon={Sparkles}
+            href="/admin/content-generator"
             disabled={!session.user.permissions.draftNewsletter && !session.user.permissions.manageWebinars}
           />
 
