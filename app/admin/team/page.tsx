@@ -23,25 +23,41 @@ export default async function TeamManagementPage() {
       redirect("/admin")
     }
 
-    // Fetch all team members
-    const db = getFirestoreDb()
-    const adminsSnapshot = await db.collection('admins').orderBy('createdAt', 'desc').get()
+    // Check if Firebase is configured
+    const firebaseConfigured = process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== ''
 
-    const teamMembers = adminsSnapshot.docs.map(doc => {
-      const data = doc.data()
-      return {
-        email: data.email || '',
-        name: data.name || '',
-        role: data.role || 'viewer',
-        permissions: data.permissions || {},
-        status: data.status || 'pending',
-        invitedBy: data.invitedBy || '',
-        createdAt: data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-        lastLoginAt: data.lastLoginAt?.toDate?.()?.toISOString() || null,
+    let teamMembers: any[] = []
+
+    if (firebaseConfigured) {
+      try {
+        // Fetch all team members from Firestore
+        const db = getFirestoreDb()
+        const adminsSnapshot = await db.collection('admins').orderBy('createdAt', 'desc').get()
+
+        teamMembers = adminsSnapshot.docs.map(doc => {
+          const data = doc.data()
+          return {
+            email: data.email || '',
+            name: data.name || '',
+            role: data.role || 'viewer',
+            permissions: data.permissions || {},
+            status: data.status || 'pending',
+            invitedBy: data.invitedBy || '',
+            createdAt: data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+            lastLoginAt: data.lastLoginAt?.toDate?.()?.toISOString() || null,
+          }
+        })
+      } catch (fbError) {
+        console.error("❌ Firebase error in team management:", fbError)
+        // Fall through to show empty team with setup message
       }
-    }) as any[]
+    }
 
-    return <TeamManagementClient teamMembers={teamMembers} currentUser={session.user} />
+    return <TeamManagementClient
+      teamMembers={teamMembers}
+      currentUser={session.user}
+      firebaseConfigured={firebaseConfigured}
+    />
 
   } catch (error: any) {
     console.error("❌ Team management error:", error)

@@ -42,6 +42,7 @@ interface TeamMember extends Omit<AdminUser, 'createdAt' | 'lastLoginAt'> {
 interface TeamManagementClientProps {
   teamMembers: TeamMember[]
   currentUser: any
+  firebaseConfigured?: boolean
 }
 
 const roleColors = {
@@ -66,7 +67,7 @@ const roleDescriptions = {
   viewer: "View-only access to analytics and content",
 }
 
-export function TeamManagementClient({ teamMembers, currentUser }: TeamManagementClientProps) {
+export function TeamManagementClient({ teamMembers, currentUser, firebaseConfigured = true }: TeamManagementClientProps) {
   const [isInviteOpen, setIsInviteOpen] = useState(false)
   const [members, setMembers] = useState<TeamMember[]>(teamMembers)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -255,11 +256,48 @@ export function TeamManagementClient({ teamMembers, currentUser }: TeamManagemen
             Invite team members and manage their access permissions
           </p>
         </div>
-        <Button onClick={() => setIsInviteOpen(true)} variant="cta" size="lg">
+        <Button
+          onClick={() => setIsInviteOpen(true)}
+          variant="cta"
+          size="lg"
+          disabled={!firebaseConfigured}
+        >
           <UserPlus className="h-5 w-5 mr-2" />
           Invite Team Member
         </Button>
       </div>
+
+      {/* Firebase Setup Notice */}
+      {!firebaseConfigured && (
+        <div className="bg-amber-50 border-2 border-amber-200 rounded-xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Settings className="h-5 w-5 text-amber-700" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-amber-900 mb-2">
+                Firebase Setup Required
+              </h3>
+              <p className="text-amber-800 mb-4">
+                Team management requires Firebase/Firestore to store team member data.
+                To enable this feature, please complete the Firebase setup.
+              </p>
+              <div className="bg-white rounded-lg p-4 border border-amber-200">
+                <h4 className="font-semibold text-sm text-amber-900 mb-2">Setup Steps:</h4>
+                <ol className="list-decimal list-inside space-y-1 text-sm text-amber-800">
+                  <li>Create a Firebase project at <a href="https://console.firebase.google.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-900">Firebase Console</a></li>
+                  <li>Generate a service account JSON key</li>
+                  <li>Add the entire JSON content as <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-xs">FIREBASE_ADMIN_KEY</code> in your <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-xs">.env.local</code> file</li>
+                  <li>Restart your development server</li>
+                </ol>
+                <p className="text-xs text-amber-700 mt-3">
+                  📄 Detailed instructions: <code className="bg-amber-100 px-1 py-0.5 rounded">docs/firebase-setup-guide.md</code>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Success/Error Messages */}
       {success && (
@@ -277,20 +315,33 @@ export function TeamManagementClient({ teamMembers, currentUser }: TeamManagemen
 
       {/* Team Members List */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Member</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Role</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Permissions</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Last Login</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {members.map((member) => (
+        {members.length === 0 ? (
+          <div className="p-12 text-center">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <UserPlus className="h-8 w-8 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Team Members Yet</h3>
+            <p className="text-gray-600 mb-4">
+              {firebaseConfigured
+                ? "Get started by inviting your first team member"
+                : "Complete Firebase setup to start inviting team members"}
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Member</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Role</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Permissions</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Last Login</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {members.map((member) => (
                 <tr key={member.email} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4">
                     <div>
@@ -366,11 +417,12 @@ export function TeamManagementClient({ teamMembers, currentUser }: TeamManagemen
                       </div>
                     )}
                   </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {/* Invite Dialog */}

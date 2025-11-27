@@ -41,25 +41,38 @@ export default async function WebinarManagementPage() {
       redirect("/admin")
     }
 
-    // Fetch webinars from Firestore
-    const db = getFirestoreDb()
-    const webinarsSnapshot = await db
-      .collection('webinars')
-      .orderBy('date', 'desc')
-      .get()
+    // Check if Firebase is configured
+    const firebaseConfigured = process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== ''
 
-    const webinars: Webinar[] = webinarsSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-      date: doc.data().date?.toDate?.()?.toISOString() || new Date().toISOString(),
-      createdAt: doc.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-      updatedAt: doc.data().updatedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-    })) as Webinar[]
+    let webinars: Webinar[] = []
+
+    if (firebaseConfigured) {
+      try {
+        // Fetch webinars from Firestore
+        const db = getFirestoreDb()
+        const webinarsSnapshot = await db
+          .collection('webinars')
+          .orderBy('date', 'desc')
+          .get()
+
+        webinars = webinarsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          date: doc.data().date?.toDate?.()?.toISOString() || new Date().toISOString(),
+          createdAt: doc.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+          updatedAt: doc.data().updatedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+        })) as Webinar[]
+      } catch (fbError) {
+        console.error("❌ Firebase error in webinar management:", fbError)
+        // Fall through to show empty webinars with setup message
+      }
+    }
 
     return (
       <WebinarManagementClient
         webinars={webinars}
         currentUser={session.user}
+        firebaseConfigured={firebaseConfigured}
       />
     )
 

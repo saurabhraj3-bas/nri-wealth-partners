@@ -33,6 +33,7 @@ import {
   Globe,
   User,
   Tag,
+  Settings,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Webinar } from "@/app/admin/webinars/page"
@@ -40,6 +41,7 @@ import type { Webinar } from "@/app/admin/webinars/page"
 interface WebinarManagementClientProps {
   webinars: Webinar[]
   currentUser: any
+  firebaseConfigured?: boolean
 }
 
 const statusColors = {
@@ -58,7 +60,7 @@ const timezones = [
   { value: "AEDT", label: "Australia (AEDT)" },
 ]
 
-export function WebinarManagementClient({ webinars, currentUser }: WebinarManagementClientProps) {
+export function WebinarManagementClient({ webinars, currentUser, firebaseConfigured = true }: WebinarManagementClientProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingWebinar, setEditingWebinar] = useState<Webinar | null>(null)
   const [webinarList, setWebinarList] = useState<Webinar[]>(webinars)
@@ -195,11 +197,48 @@ export function WebinarManagementClient({ webinars, currentUser }: WebinarManage
             Create and manage webinars with ease
           </p>
         </div>
-        <Button onClick={() => handleOpenDialog()} variant="cta" size="lg">
+        <Button
+          onClick={() => handleOpenDialog()}
+          variant="cta"
+          size="lg"
+          disabled={!firebaseConfigured}
+        >
           <Plus className="h-5 w-5 mr-2" />
           Create Webinar
         </Button>
       </div>
+
+      {/* Firebase Setup Notice */}
+      {!firebaseConfigured && (
+        <div className="bg-amber-50 border-2 border-amber-200 rounded-xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Settings className="h-5 w-5 text-amber-700" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-amber-900 mb-2">
+                Firebase Setup Required
+              </h3>
+              <p className="text-amber-800 mb-4">
+                Webinar management requires Firebase/Firestore to store webinar data.
+                To enable this feature, please complete the Firebase setup.
+              </p>
+              <div className="bg-white rounded-lg p-4 border border-amber-200">
+                <h4 className="font-semibold text-sm text-amber-900 mb-2">Setup Steps:</h4>
+                <ol className="list-decimal list-inside space-y-1 text-sm text-amber-800">
+                  <li>Create a Firebase project at <a href="https://console.firebase.google.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-900">Firebase Console</a></li>
+                  <li>Generate a service account JSON key</li>
+                  <li>Add the entire JSON content as <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-xs">FIREBASE_ADMIN_KEY</code> in your <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-xs">.env.local</code> file</li>
+                  <li>Restart your development server</li>
+                </ol>
+                <p className="text-xs text-amber-700 mt-3">
+                  📄 Detailed instructions: <code className="bg-amber-100 px-1 py-0.5 rounded">docs/firebase-setup-guide.md</code>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Success/Error Messages */}
       {success && (
@@ -220,11 +259,17 @@ export function WebinarManagementClient({ webinars, currentUser }: WebinarManage
         <div className="text-center py-20 bg-white rounded-xl border border-gray-200">
           <Video className="h-16 w-16 mx-auto mb-4 text-gray-300" />
           <h3 className="text-2xl font-semibold text-gray-700 mb-2">No webinars yet</h3>
-          <p className="text-gray-500 mb-6">Create your first webinar to get started</p>
-          <Button onClick={() => handleOpenDialog()} variant="cta">
-            <Plus className="h-5 w-5 mr-2" />
-            Create Webinar
-          </Button>
+          <p className="text-gray-500 mb-6">
+            {firebaseConfigured
+              ? "Create your first webinar to get started"
+              : "Complete Firebase setup to start creating webinars"}
+          </p>
+          {firebaseConfigured && (
+            <Button onClick={() => handleOpenDialog()} variant="cta">
+              <Plus className="h-5 w-5 mr-2" />
+              Create Webinar
+            </Button>
+          )}
         </div>
       ) : (
         <div className="grid gap-6">
