@@ -2,6 +2,7 @@
  * Admin Layout with Navigation
  *
  * Provides navigation sidebar and header for all admin pages with error handling.
+ * Login page has its own layout, so this won't apply to it.
  */
 
 import { redirect } from "next/navigation"
@@ -20,7 +21,7 @@ export default async function AdminLayout({
     const session = await auth()
 
     if (!session?.user) {
-      redirect("/admin/login")
+      redirect("/auth/admin")
     }
 
     return (
@@ -45,6 +46,6 @@ export default async function AdminLayout({
     console.error("❌ Admin layout error:", error)
 
     // Redirect to login on any error
-    redirect("/admin/login")
+    redirect("/auth/admin")
   }
 }
