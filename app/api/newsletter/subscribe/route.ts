@@ -53,7 +53,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Database connection failed',
-          details: process.env.NODE_ENV === 'development' ? String(dbError) : undefined
+          message: 'We are currently experiencing technical difficulties. Please try again later or contact support@nriwealthpartners.com',
+          details: process.env.NODE_ENV === 'development' ? String(dbError) : 'Service temporarily unavailable'
         },
         { status: 503 }
       );

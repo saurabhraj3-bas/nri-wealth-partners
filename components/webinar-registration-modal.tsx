@@ -110,7 +110,7 @@ export function WebinarRegistrationModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[600px] lg:max-w-[700px]">
         <DialogHeader>
           <DialogTitle className="text-2xl text-navy">
             Register for Webinar

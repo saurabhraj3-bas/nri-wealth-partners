@@ -15,7 +15,10 @@ import {
   TrendingUp,
   Calendar,
   Rss,
-  AlertCircle
+  AlertCircle,
+  Video,
+  FolderOpen,
+  UserCog
 } from "lucide-react"
 import Link from "next/link"
 
@@ -117,6 +120,36 @@ export default async function AdminDashboardPage() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Team Management - Super Admin Only */}
+          {session.user.role === 'super_admin' && (
+            <QuickActionCard
+              title="Team Management"
+              description="Invite and manage team members"
+              icon={UserCog}
+              href="/admin/team"
+              disabled={false}
+            />
+          )}
+
+          {/* Webinars */}
+          <QuickActionCard
+            title="Manage Webinars"
+            description="Create and edit webinars"
+            icon={Video}
+            href="/admin/webinars"
+            disabled={!session.user.permissions.manageWebinars}
+          />
+
+          {/* Resources */}
+          <QuickActionCard
+            title="Manage Resources"
+            description="Upload PDFs and resources"
+            icon={FolderOpen}
+            href="/admin/resources"
+            disabled={!session.user.permissions.draftNewsletter && !session.user.permissions.manageWebinars}
+          />
+
+          {/* Newsletter */}
           <QuickActionCard
             title="Create Newsletter"
             description="Start a new newsletter draft"
@@ -124,6 +157,8 @@ export default async function AdminDashboardPage() {
             href="/admin/newsletters/new"
             disabled={!session.user.permissions.draftNewsletter}
           />
+
+          {/* Subscribers */}
           <QuickActionCard
             title="View Subscribers"
             description="Manage your subscriber list"
@@ -131,6 +166,8 @@ export default async function AdminDashboardPage() {
             href="/admin/subscribers"
             disabled={!session.user.permissions.manageSubscribers}
           />
+
+          {/* Content Sources */}
           <QuickActionCard
             title="Content Sources"
             description="Manage RSS feeds and sources"

@@ -195,8 +195,39 @@ export default function NewsletterSubscribePage() {
                   </h2>
 
                   {error && (
-                    <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-                      <p className="text-red-800">{error}</p>
+                    <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0">
+                          <svg className="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-semibold text-red-800 mb-1">Subscription Error</p>
+                          <p className="text-sm text-red-700">
+                            {error === 'Database connection failed'
+                              ? "We're currently experiencing technical difficulties. Please try again later or contact us at support@nriwealthpartners.com"
+                              : error}
+                          </p>
+                          {error === 'Database connection failed' && (
+                            <div className="mt-3 flex gap-2">
+                              <a
+                                href="mailto:support@nriwealthpartners.com"
+                                className="text-xs font-medium text-red-800 hover:text-red-900 underline"
+                              >
+                                Contact Support
+                              </a>
+                              <span className="text-red-400">•</span>
+                              <button
+                                onClick={() => window.location.reload()}
+                                className="text-xs font-medium text-red-800 hover:text-red-900 underline"
+                              >
+                                Try Again
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   )}
 
