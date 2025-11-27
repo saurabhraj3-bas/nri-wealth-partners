@@ -123,7 +123,43 @@ ${additionalSections.length > 0 ? `\n**Additional Requested Sections:**\n${addit
 Generate the complete guide content now.
   `;
 
-  // OPTION 1: Use Anthropic Claude API (if you have API key)
+  // OPTION 1: Use Google Gemini API (FREE with generous limits - RECOMMENDED!)
+  if (process.env.GOOGLE_AI_API_KEY) {
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GOOGLE_AI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: prompt
+              }]
+            }],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 16000,
+            }
+          })
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Google AI API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.candidates[0].content.parts[0].text;
+
+    } catch (apiError) {
+      console.warn('⚠️ Google AI API unavailable, trying other options...');
+    }
+  }
+
+  // OPTION 2: Use Anthropic Claude API (if you have API key)
   if (process.env.ANTHROPIC_API_KEY) {
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {

@@ -392,11 +392,33 @@ After generating content, optimize for search:
 
 ## AI API Setup (Optional)
 
-The content generator works in 3 modes:
+The content generator works in 4 modes:
 
-### Mode 1: Anthropic Claude (Recommended)
+### Mode 1: Google AI Studio (RECOMMENDED - FREE!) ⭐
 
-**Best for:** Highest quality content, nuanced understanding
+**Best for:** FREE with generous limits, excellent quality
+
+**Setup:**
+1. Get API key: https://aistudio.google.com/app/apikey
+2. Sign in with Google account
+3. Click "Create API key in new project"
+4. Copy key (starts with `AIza...`)
+5. Add to `.env.local`:
+   ```
+   GOOGLE_AI_API_KEY=AIza...
+   ```
+6. Restart server
+
+**Cost:** FREE
+- Gemini 1.5 Flash: 15 requests/min, 1M tokens/day
+- Gemini 1.5 Pro: 2 requests/min, 32K tokens/min
+- Perfect for generating 10-20 blog posts/day
+
+**Quality:** Excellent (rivals GPT-4 and Claude)
+
+### Mode 2: Anthropic Claude
+
+**Best for:** Highest quality content, nuanced understanding (if you want to pay)
 
 **Setup:**
 1. Get API key: https://console.anthropic.com
@@ -406,9 +428,9 @@ The content generator works in 3 modes:
    ```
 3. Restart server
 
-**Cost:** ~$0.03 per 1,000 words (very affordable)
+**Cost:** ~$0.03 per 1,000 words (pay-as-you-go)
 
-### Mode 2: OpenAI GPT-4
+### Mode 3: OpenAI GPT-4
 
 **Best for:** Alternative if you already have OpenAI account
 
@@ -421,7 +443,7 @@ The content generator works in 3 modes:
 
 **Cost:** ~$0.06 per 1,000 words
 
-### Mode 3: Template-Based (No API Key)
+### Mode 4: Template-Based (No API Key)
 
 **Best for:** Getting started immediately, no cost
 
@@ -432,7 +454,10 @@ The content generator works in 3 modes:
 
 **Quality:** 60-70% complete, requires more editing
 
-**Recommendation:** Start with Mode 3, upgrade to Mode 1 when you see the value
+**Recommendation:**
+1. **Start with Mode 1 (Google AI - FREE!)** for best experience
+2. If you want even higher quality, try Mode 2 (Claude) or Mode 3 (GPT-4)
+3. Mode 4 (Template) works without any API key if you prefer manual editing
 
 ---
 
