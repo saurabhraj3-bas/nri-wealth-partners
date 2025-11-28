@@ -194,3 +194,126 @@ export async function isAdminActive(email: string): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * Set admin password (hashed with bcrypt)
+ */
+export async function setAdminPassword(email: string, password: string): Promise<void> {
+  try {
+    const bcrypt = await import('bcryptjs');
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const db = getFirestoreDb();
+    await db.collection('admins').doc(email).update({
+      passwordHash,
+      passwordChangedAt: new Date(),
+      passwordResetToken: null,
+      passwordResetExpires: null
+    });
+
+    console.log(`✅ Password updated for ${email}`);
+  } catch (error) {
+    console.error(`❌ Failed to set password for ${email}:`, error);
+    throw new Error(
+      `Failed to set password: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
+  }
+}
+
+/**
+ * Verify admin password
+ */
+export async function verifyAdminPassword(email: string, password: string): Promise<boolean> {
+  try {
+    const admin = await getAdminUser(email);
+
+    if (!admin || !admin.passwordHash) {
+      return false;
+    }
+
+    const bcrypt = await import('bcryptjs');
+    return await bcrypt.compare(password, admin.passwordHash);
+  } catch (error) {
+    console.error(`❌ Failed to verify password for ${email}:`, error);
+    return false;
+  }
+}
+
+/**
+ * Generate password reset token
+ */
+export async function generatePasswordResetToken(email: string): Promise<string> {
+  try {
+    const crypto = await import('crypto');
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 1); // Token valid for 1 hour
+
+    const db = getFirestoreDb();
+    await db.collection('admins').doc(email).update({
+      passwordResetToken: token,
+      passwordResetExpires: expiresAt
+    });
+
+    console.log(`✅ Password reset token generated for ${email}`);
+    return token;
+  } catch (error) {
+    console.error(`❌ Failed to generate reset token for ${email}:`, error);
+    throw new Error(
+      `Failed to generate reset token: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
+  }
+}
+
+/**
+ * Verify password reset token
+ */
+export async function verifyPasswordResetToken(email: string, token: string): Promise<boolean> {
+  try {
+    const admin = await getAdminUser(email);
+
+    if (!admin || !admin.passwordResetToken || !admin.passwordResetExpires) {
+      return false;
+    }
+
+    // Check if token matches
+    if (admin.passwordResetToken !== token) {
+      return false;
+    }
+
+    // Check if token is expired
+    const expiresAt = admin.passwordResetExpires.toDate ? admin.passwordResetExpires.toDate() : new Date(admin.passwordResetExpires);
+    if (expiresAt < new Date()) {
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error(`❌ Failed to verify reset token for ${email}:`, error);
+    return false;
+  }
+}
+
+/**
+ * Reset password using token
+ */
+export async function resetPasswordWithToken(
+  email: string,
+  token: string,
+  newPassword: string
+): Promise<boolean> {
+  try {
+    const isValid = await verifyPasswordResetToken(email, token);
+
+    if (!isValid) {
+      return false;
+    }
+
+    await setAdminPassword(email, newPassword);
+    console.log(`✅ Password reset successful for ${email}`);
+    return true;
+  } catch (error) {
+    console.error(`❌ Failed to reset password for ${email}:`, error);
+    return false;
+  }
+}

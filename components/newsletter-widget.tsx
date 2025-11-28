@@ -17,6 +17,14 @@ import {
 import type { CuratedArticle } from '@/lib/newsletter-helpers'
 
 export async function NewsletterWidget() {
+  // Check if Firebase is configured
+  const firebaseConfigured = process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== ''
+
+  if (!firebaseConfigured) {
+    // Return null if Firebase is not configured - homepage will work without newsletter widget
+    return null
+  }
+
   try {
     const articles = await getRecentArticles(6)
 

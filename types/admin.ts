@@ -23,6 +23,10 @@ export interface AdminUser {
   invitedBy: string;
   createdAt: any;
   lastLoginAt: any;
+  passwordHash?: string; // Hashed password (bcrypt)
+  passwordResetToken?: string; // One-time reset token
+  passwordResetExpires?: any; // Reset token expiration timestamp
+  passwordChangedAt?: any; // Last password change timestamp
   metadata?: {
     ipAddress?: string;
     userAgent?: string;

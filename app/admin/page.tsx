@@ -19,7 +19,8 @@ import {
   Video,
   FolderOpen,
   UserCog,
-  Sparkles
+  Sparkles,
+  Newspaper
 } from "lucide-react"
 import Link from "next/link"
 
@@ -143,6 +144,15 @@ export default async function AdminDashboardPage() {
             icon={Video}
             href="/admin/webinars"
             disabled={!session.user.permissions.manageWebinars}
+          />
+
+          {/* News Management */}
+          <QuickActionCard
+            title="Manage News"
+            description="Moderate and delete news articles"
+            icon={Newspaper}
+            href="/admin/news"
+            disabled={!session.user.permissions.deleteContent}
           />
 
           {/* Resources */}

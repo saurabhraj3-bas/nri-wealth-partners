@@ -51,35 +51,43 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const email = credentials.email as string;
           const password = credentials.password as string;
 
-          // For MVP: Simple password check
-          // TODO: Replace with proper Firebase Authentication or secure password hash
-          const adminPassword = process.env.ADMIN_PASSWORD || 'changeme123';
-
-          if (password !== adminPassword) {
-            console.warn(`⚠️ Failed login attempt for ${email}`);
-            throw new Error('Invalid credentials');
-          }
-
           // Check if Firebase is configured
           const firebaseConfigured = process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== '';
 
           if (firebaseConfigured) {
             try {
               // Dynamically import Firebase Admin functions (avoid bundling in Edge Runtime)
-              const { getAdminUser, updateAdminLastLogin } = await import('@/lib/firebase-admin');
+              const { getAdminUser, verifyAdminPassword, updateAdminLastLogin } = await import('@/lib/firebase-admin');
 
               // Get admin user from Firestore
               const admin = await getAdminUser(email);
 
               if (!admin) {
                 console.warn(`⚠️ Login attempt for non-existent admin: ${email}`);
-                throw new Error('Admin user not found');
+                throw new Error('Invalid credentials');
               }
 
               // Check if admin is active
               if (admin.status !== 'active') {
                 console.warn(`⚠️ Login attempt for ${admin.status} admin: ${email}`);
                 throw new Error(`Account is ${admin.status}. Please contact support.`);
+              }
+
+              // Verify password using bcrypt (if passwordHash exists)
+              if (admin.passwordHash) {
+                const isValidPassword = await verifyAdminPassword(email, password);
+
+                if (!isValidPassword) {
+                  console.warn(`⚠️ Failed login attempt for ${email} (invalid password)`);
+                  throw new Error('Invalid credentials');
+                }
+              } else {
+                // Fallback to ADMIN_PASSWORD for admins without individual passwords yet
+                const adminPassword = process.env.ADMIN_PASSWORD || 'changeme123';
+                if (password !== adminPassword) {
+                  console.warn(`⚠️ Failed login attempt for ${email} (fallback password)`);
+                  throw new Error('Invalid credentials');
+                }
               }
 
               // Update last login timestamp (non-blocking)
@@ -104,6 +112,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
 
           // Fallback: Simple auth without Firebase (for development/testing)
+          const adminPassword = process.env.ADMIN_PASSWORD || 'changeme123';
+          if (password !== adminPassword) {
+            console.warn(`⚠️ Failed login attempt for ${email}`);
+            throw new Error('Invalid credentials');
+          }
+
           console.log(`✅ Simple auth login: ${email} (super_admin)`);
           return {
             id: email,
@@ -111,11 +125,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             name: email.split('@')[0],
             role: 'super_admin',
             permissions: {
+              manageAdmins: true,
+              manageWebinars: true,
+              deleteContent: true,
               draftNewsletter: true,
-              approveNewsletter: true,
-              sendNewsletter: true,
+              publishNewsletter: true,
               manageSubscribers: true,
-              manageWebinars: true
+              viewAnalytics: true,
+              exportData: true
             }
           };
         } catch (error) {

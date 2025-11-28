@@ -42,7 +42,7 @@ export default async function WebinarManagementPage() {
     }
 
     // Check if Firebase is configured
-    const firebaseConfigured = process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== ''
+    const firebaseConfigured = !!(process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== '')
 
     let webinars: Webinar[] = []
 

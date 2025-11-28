@@ -24,7 +24,7 @@ export default async function TeamManagementPage() {
     }
 
     // Check if Firebase is configured
-    const firebaseConfigured = process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== ''
+    const firebaseConfigured = !!(process.env.FIREBASE_ADMIN_KEY && process.env.FIREBASE_ADMIN_KEY !== '')
 
     let teamMembers: any[] = []
 
