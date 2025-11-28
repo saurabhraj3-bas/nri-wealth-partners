@@ -119,7 +119,7 @@ export default function NewsletterArchive() {
           Expert insights, market updates, and success stories - all in one place.
         </p>
         <Button size="lg" className="bg-gold hover:bg-gold/90 text-navy font-semibold" asChild>
-          <Link href="/insights#subscribe">
+          <Link href="/insights/subscribe">
             Subscribe for Free
           </Link>
         </Button>
