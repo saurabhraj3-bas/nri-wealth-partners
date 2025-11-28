@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { GoogleGenAI } from '@google/genai'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import nodemailer from 'nodemailer'
 import fs from 'fs'
 import path from 'path'
 import { analyzeConversation, type ConversationRecord } from '@/lib/chatbot-analytics'
 import { findRelevantKnowledge } from '@/lib/chatbot-knowledge-base'
 
-// Initialize Google GenAI client (new unified SDK for Gemini 2.0+)
+// Initialize Google Generative AI client
 const getClient = () => {
-  return new GoogleGenAI({
-    apiKey: process.env.GOOGLE_AI_API_KEY || '',
-  })
+  return new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '')
 }
 
 // System prompt for NRI Wealth Partners chatbot
@@ -103,24 +101,26 @@ export async function POST(req: NextRequest) {
 
     // Using Gemini 2.0 Flash ($0.10 input, $0.40 output per 1M tokens)
     // Free tier: 1,500 requests/day, 1M tokens/minute
-    // Available models:
-    // - gemini-2.0-flash: Stable production model (recommended)
-    // - gemini-2.5-flash: Newest with thinking ($0.30 input, $2.50 output)
-    const chatSession = client.chats.create({
-      model: 'gemini-2.0-flash',
+    const model = client.getGenerativeModel({
+      model: 'gemini-2.0-flash-exp',
       systemInstruction: enhancedPrompt,
-      history: chatHistory,
-      config: {
+      generationConfig: {
         maxOutputTokens: 150,  // Enough for 3-4 complete sentences (~60-80 words)
         temperature: 0.7,
         topK: 40,
         topP: 0.95,
       },
-    } as any)
+    })
+
+    // Start chat session with history
+    const chat = model.startChat({
+      history: chatHistory,
+    })
 
     // Send message and get response
-    const result = await chatSession.sendMessage({ message })
-    let aiResponse = result.text || ''
+    const result = await chat.sendMessage(message)
+    const response = await result.response
+    let aiResponse = response.text() || ''
 
     // AGGRESSIVE post-processing to enforce SHORT, conversational responses
     // 1. Remove all bullet points and list markers (both at line start AND inline)
