@@ -65,7 +65,7 @@ const TrustMetrics = () => {
   const metrics = [
     { value: "18+", label: "Years Investment Advisory Experience" },
     { value: "500+", label: "Individual Clients Served" },
-    { value: "₹250+", label: "Crores Assets Under Advisory" },
+    { value: "₹500+", label: "Crores Assets Under Advisory" },
     { value: "90+", label: "Corporate Clients" },
   ]
 

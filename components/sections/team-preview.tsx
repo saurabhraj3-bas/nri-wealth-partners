@@ -55,7 +55,7 @@ const TeamPreview = () => {
             <h3 className="text-2xl font-bold text-navy mb-2">Avani Parekh</h3>
             <p className="text-gold font-semibold mb-4">AMFI Registered Mutual Fund Distributor</p>
             <p className="text-gray-600 mb-4">
-              Co-Founder & Wealth Management Specialist managing ₹250+ Crores AUA with expertise in goal-based planning.
+              Co-Founder & Wealth Management Specialist managing ₹500+ Crores AUA with expertise in goal-based planning.
             </p>
             <div className="flex justify-center gap-2">
               <a href="#" className="text-navy hover:text-gold transition-colors">

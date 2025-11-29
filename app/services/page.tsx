@@ -58,7 +58,7 @@ export default function ServicesPage() {
             "Quarterly review reports",
             "Goal tracking and adjustments",
           ],
-          trackRecord: "₹250+ Crores Assets Under Advisory",
+          trackRecord: "₹500+ Crores Assets Under Advisory",
         },
       ],
     },

@@ -212,7 +212,7 @@ export default function AboutPage() {
                     <p>
                       As an AMFI registered Mutual Fund Distributor with NJ India Invest Pvt. Ltd. and Sub-Broker with IIFL
                       Capital Services Ltd., Mrs. Parekh manages an impressive portfolio with Assets Under Advisory exceeding
-                      ₹250 Crores. Her client base includes 500+ individual investors and 40+ corporate clients, all of whom
+                      ₹500 Crores. Her client base includes 500+ individual investors and 40+ corporate clients, all of whom
                       benefit from her deep understanding of market dynamics and investment products.
                     </p>
                     <p>
