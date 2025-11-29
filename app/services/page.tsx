@@ -270,7 +270,7 @@ export default function ServicesPage() {
             <p className="text-gray-600">Click to explore services in each category</p>
           </div>
 
-          <Accordion type="multiple" className="space-y-4">
+          <Accordion type="multiple" defaultValue={["category-0"]} className="space-y-4">
             {serviceCategories.map((categoryGroup, categoryIndex) => (
               <AccordionItem
                 key={categoryIndex}

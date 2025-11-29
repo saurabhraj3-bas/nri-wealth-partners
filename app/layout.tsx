@@ -18,6 +18,9 @@ const CookieConsent = dynamicImport(() => import("@/components/cookie-consent"),
 const GoogleAnalytics = dynamicImport(() => import("@/components/analytics/google-analytics"), {
   ssr: false,
 })
+const Toaster = dynamicImport(() => import("sonner").then(mod => ({ default: mod.Toaster })), {
+  ssr: false,
+})
 
 // Force dynamic rendering - required due to Button component serialization issues
 export const dynamic = 'force-dynamic'
@@ -89,6 +92,7 @@ export default function RootLayout({
         <FloatingActions />
         <AIChatbot />
         <CookieConsent />
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   )

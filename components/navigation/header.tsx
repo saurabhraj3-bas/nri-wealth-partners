@@ -66,15 +66,15 @@ const Header = () => {
       )}
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-40">
+        <div className="flex items-center justify-between h-20 md:h-28 lg:h-36">
           {/* Logo */}
-          <Link href="/" className="flex items-center flex-shrink-0 py-4">
+          <Link href="/" className="flex items-center flex-shrink-0 py-2 md:py-3 lg:py-4">
             <Image
               src="/images/logos/logo.png"
               alt="NRI Wealth Partners"
               width={450}
               height={169}
-              className="h-36 w-auto"
+              className="h-16 md:h-24 lg:h-32 w-auto"
               priority
             />
           </Link>

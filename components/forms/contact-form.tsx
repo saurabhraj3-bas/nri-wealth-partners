@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -30,18 +31,19 @@ type ContactFormData = z.infer<typeof contactSchema>
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, touchedFields, dirtyFields },
     reset,
     setValue,
     watch,
+    trigger,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
+    mode: "onTouched",
     defaultValues: {
       countryCode: "+91",
       contactMethod: "Email",
@@ -69,33 +71,32 @@ const ContactForm = () => {
 
       console.log("Form submitted successfully:", result)
 
-      setIsSuccess(true)
+      // Show success toast
+      toast.success("Message sent successfully!", {
+        description: "We'll get back to you within 24 hours.",
+        duration: 3000,
+      })
+
       reset()
 
-      // Redirect to thank you page after 2 seconds
+      // Redirect to thank you page after toast
       setTimeout(() => {
         window.location.href = "/thank-you"
       }, 2000)
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Failed to send message"
-      setError(errorMessage + ". Please try again or contact us directly at support@nriwealthpartners.com")
+
+      // Show error toast
+      toast.error("Failed to send message", {
+        description: errorMessage + ". Please try again or contact us directly at support@nriwealthpartners.com",
+        duration: 5000,
+      })
+
+      setError(errorMessage)
       console.error("Form submission error:", err)
     } finally {
       setIsSubmitting(false)
     }
-  }
-
-  if (isSuccess) {
-    return (
-      <div className="text-center py-12">
-        <CheckCircle2 className="h-16 w-16 text-green-600 mx-auto mb-4" />
-        <h3 className="text-2xl font-bold text-navy mb-2">Thank You!</h3>
-        <p className="text-gray-600 mb-4">
-          We've received your message and will get back to you within 24 hours.
-        </p>
-        <p className="text-sm text-gray-500">Redirecting to confirmation page...</p>
-      </div>
-    )
   }
 
   return (
@@ -103,12 +104,17 @@ const ContactForm = () => {
       {/* Full Name */}
       <div>
         <Label htmlFor="fullName">Full Name *</Label>
-        <Input
-          id="fullName"
-          {...register("fullName")}
-          placeholder="John Doe"
-          className="mt-1"
-        />
+        <div className="relative">
+          <Input
+            id="fullName"
+            {...register("fullName")}
+            placeholder="John Doe"
+            className="mt-1 pr-10"
+          />
+          {touchedFields.fullName && !errors.fullName && (
+            <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-green-600 mt-0.5" />
+          )}
+        </div>
         {errors.fullName && (
           <p className="text-sm text-red-600 mt-1">{errors.fullName.message}</p>
         )}
@@ -117,13 +123,18 @@ const ContactForm = () => {
       {/* Email */}
       <div>
         <Label htmlFor="email">Email Address *</Label>
-        <Input
-          id="email"
-          type="email"
-          {...register("email")}
-          placeholder="john@example.com"
-          className="mt-1"
-        />
+        <div className="relative">
+          <Input
+            id="email"
+            type="email"
+            {...register("email")}
+            placeholder="john@example.com"
+            className="mt-1 pr-10"
+          />
+          {touchedFields.email && !errors.email && (
+            <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-green-600 mt-0.5" />
+          )}
+        </div>
         {errors.email && (
           <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
         )}
@@ -149,12 +160,17 @@ const ContactForm = () => {
               <SelectItem value="+61">+61 (AU)</SelectItem>
             </SelectContent>
           </Select>
-          <Input
-            id="phone"
-            {...register("phone")}
-            placeholder="9974742626"
-            className="flex-1"
-          />
+          <div className="flex-1 relative">
+            <Input
+              id="phone"
+              {...register("phone")}
+              placeholder="9974742626"
+              className="pr-10"
+            />
+            {touchedFields.phone && !errors.phone && (
+              <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-green-600" />
+            )}
+          </div>
         </div>
         {errors.phone && (
           <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p>
@@ -164,21 +180,26 @@ const ContactForm = () => {
       {/* Country */}
       <div>
         <Label htmlFor="country">Country of Residence *</Label>
-        <Select onValueChange={(value) => setValue("country", value)}>
-          <SelectTrigger className="mt-1">
-            <SelectValue placeholder="Select your country" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="USA">USA</SelectItem>
-            <SelectItem value="Canada">Canada</SelectItem>
-            <SelectItem value="UK">UK</SelectItem>
-            <SelectItem value="UAE">UAE</SelectItem>
-            <SelectItem value="Singapore">Singapore</SelectItem>
-            <SelectItem value="Australia">Australia</SelectItem>
-            <SelectItem value="India">India</SelectItem>
-            <SelectItem value="Other">Other</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="relative">
+          <Select onValueChange={(value) => { setValue("country", value); trigger("country"); }}>
+            <SelectTrigger className="mt-1 pr-10">
+              <SelectValue placeholder="Select your country" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="USA">USA</SelectItem>
+              <SelectItem value="Canada">Canada</SelectItem>
+              <SelectItem value="UK">UK</SelectItem>
+              <SelectItem value="UAE">UAE</SelectItem>
+              <SelectItem value="Singapore">Singapore</SelectItem>
+              <SelectItem value="Australia">Australia</SelectItem>
+              <SelectItem value="India">India</SelectItem>
+              <SelectItem value="Other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+          {watch("country") && !errors.country && (
+            <CheckCircle2 className="absolute right-10 top-1/2 -translate-y-1/2 h-5 w-5 text-green-600 mt-0.5 pointer-events-none" />
+          )}
+        </div>
         {errors.country && (
           <p className="text-sm text-red-600 mt-1">{errors.country.message}</p>
         )}
@@ -187,21 +208,26 @@ const ContactForm = () => {
       {/* Inquiry Type */}
       <div>
         <Label htmlFor="inquiryType">Type of Inquiry *</Label>
-        <Select onValueChange={(value) => setValue("inquiryType", value)}>
-          <SelectTrigger className="mt-1">
-            <SelectValue placeholder="Select inquiry type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="General Inquiry">General Inquiry</SelectItem>
-            <SelectItem value="Investment Advisory">Investment Advisory</SelectItem>
-            <SelectItem value="Mutual Fund Planning">Mutual Fund Planning</SelectItem>
-            <SelectItem value="Tax Planning & Compliance">Tax Planning & Compliance</SelectItem>
-            <SelectItem value="Retirement Planning">Retirement Planning</SelectItem>
-            <SelectItem value="Portfolio Review">Portfolio Review</SelectItem>
-            <SelectItem value="Corporate Services">Corporate Services</SelectItem>
-            <SelectItem value="Partnership/Collaboration">Partnership/Collaboration</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="relative">
+          <Select onValueChange={(value) => { setValue("inquiryType", value); trigger("inquiryType"); }}>
+            <SelectTrigger className="mt-1 pr-10">
+              <SelectValue placeholder="Select inquiry type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="General Inquiry">General Inquiry</SelectItem>
+              <SelectItem value="Investment Advisory">Investment Advisory</SelectItem>
+              <SelectItem value="Mutual Fund Planning">Mutual Fund Planning</SelectItem>
+              <SelectItem value="Tax Planning & Compliance">Tax Planning & Compliance</SelectItem>
+              <SelectItem value="Retirement Planning">Retirement Planning</SelectItem>
+              <SelectItem value="Portfolio Review">Portfolio Review</SelectItem>
+              <SelectItem value="Corporate Services">Corporate Services</SelectItem>
+              <SelectItem value="Partnership/Collaboration">Partnership/Collaboration</SelectItem>
+            </SelectContent>
+          </Select>
+          {watch("inquiryType") && !errors.inquiryType && (
+            <CheckCircle2 className="absolute right-10 top-1/2 -translate-y-1/2 h-5 w-5 text-green-600 mt-0.5 pointer-events-none" />
+          )}
+        </div>
         {errors.inquiryType && (
           <p className="text-sm text-red-600 mt-1">{errors.inquiryType.message}</p>
         )}
@@ -221,13 +247,18 @@ const ContactForm = () => {
       {/* Message */}
       <div>
         <Label htmlFor="message">Message *</Label>
-        <Textarea
-          id="message"
-          {...register("message")}
-          placeholder="Please provide details about your inquiry..."
-          rows={5}
-          className="mt-1"
-        />
+        <div className="relative">
+          <Textarea
+            id="message"
+            {...register("message")}
+            placeholder="Please provide details about your inquiry..."
+            rows={5}
+            className="mt-1 pr-10"
+          />
+          {touchedFields.message && !errors.message && (
+            <CheckCircle2 className="absolute right-3 top-3 h-5 w-5 text-green-600" />
+          )}
+        </div>
         {errors.message && (
           <p className="text-sm text-red-600 mt-1">{errors.message.message}</p>
         )}
