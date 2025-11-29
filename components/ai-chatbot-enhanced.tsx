@@ -142,7 +142,7 @@ export default function AIChatbotEnhanced({ className }: AIChatbotProps) {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-40 left-6 z-50 bg-gradient-to-r from-navy to-blue-900 hover:from-navy/90 hover:to-blue-800 text-white rounded-2xl px-5 py-3 shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3 border-2 border-gold"
+          className="fixed bottom-24 right-6 z-50 bg-gradient-to-r from-navy to-blue-900 hover:from-navy/90 hover:to-blue-800 text-white rounded-2xl px-5 py-3 shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3 border-2 border-gold"
           aria-label="Open AI Chat"
         >
           <div className="relative">
