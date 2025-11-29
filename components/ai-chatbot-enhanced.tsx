@@ -84,6 +84,15 @@ export default function AIChatbotEnhanced({ className }: AIChatbotProps) {
     setIsLoading(true)
 
     try {
+      // Filter out welcome message from conversation history
+      // (fabricated messages confuse the AI model)
+      const realConversationHistory = messages
+        .filter(msg => msg.content !== `Welcome! I'm your NRI Wealth Assistant from NRI Wealth Partners. I can help with investments, tax planning, GIFT City, compliance (FEMA/FATCA/CRS), moving back to India, and retirement planning. What would you like to discuss?`)
+        .map(msg => ({
+          role: msg.role,
+          content: msg.content
+        }))
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
@@ -92,10 +101,7 @@ export default function AIChatbotEnhanced({ className }: AIChatbotProps) {
         body: JSON.stringify({
           message: inputMessage,
           userEmail,
-          conversationHistory: messages.map(msg => ({
-            role: msg.role,
-            content: msg.content
-          }))
+          conversationHistory: realConversationHistory
         })
       })
 
