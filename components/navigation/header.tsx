@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -55,6 +55,10 @@ const Header = () => {
     { name: "Resources", href: "/resources" },
     { name: "Webinars", href: "/webinars" },
   ]
+
+  const whatsappMessage = encodeURIComponent(
+    "Hello, I would like to know more about your NRI wealth management services."
+  )
 
   return (
     <header
@@ -124,6 +128,15 @@ const Header = () => {
 
           {/* Right Side Actions */}
           <div className="hidden lg:flex items-center space-x-2 flex-shrink-0">
+            <a
+              href={`https://wa.me/919974742626?text=${whatsappMessage}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-10 h-10 bg-[#25D366] text-white rounded-full hover:bg-[#128C7E] transition-colors shadow-md"
+              aria-label="Chat on WhatsApp"
+            >
+              <MessageCircle className="h-5 w-5" />
+            </a>
             <Button asChild variant="cta" size="sm" className="whitespace-nowrap">
               <Link href="/services">Get Started</Link>
             </Button>
@@ -176,7 +189,17 @@ const Header = () => {
                 )}
               </div>
             ))}
-            <div className="mt-4 px-4">
+            <div className="mt-4 px-4 space-y-3">
+              <a
+                href={`https://wa.me/919974742626?text=${whatsappMessage}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full h-11 bg-[#25D366] text-white rounded-button hover:bg-[#128C7E] transition-colors shadow-md font-semibold"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <MessageCircle className="h-5 w-5" />
+                Chat on WhatsApp
+              </a>
               <Button asChild variant="cta" size="default" className="w-full">
                 <Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>
                   Get Started
