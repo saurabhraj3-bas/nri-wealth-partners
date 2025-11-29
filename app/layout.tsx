@@ -18,6 +18,9 @@ const CookieConsent = dynamicImport(() => import("@/components/cookie-consent"),
 const GoogleAnalytics = dynamicImport(() => import("@/components/analytics/google-analytics"), {
   ssr: false,
 })
+const ErrorMonitorInit = dynamicImport(() => import("@/components/error-monitor-init"), {
+  ssr: false,
+})
 const Toaster = dynamicImport(() => import("sonner").then(mod => ({ default: mod.Toaster })), {
   ssr: false,
 })
@@ -86,6 +89,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className={`${inter.className} antialiased`}>
         <GoogleAnalytics />
+        <ErrorMonitorInit />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
