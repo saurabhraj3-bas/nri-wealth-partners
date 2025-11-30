@@ -89,7 +89,7 @@ class ErrorMonitor {
     }
   }
 
-  private captureError(error: Omit<ErrorReport, 'timestamp'>) {
+  public captureError(error: Omit<ErrorReport, 'timestamp'>) {
     const errorReport: ErrorReport = {
       ...error,
       timestamp: new Date().toISOString(),
@@ -131,7 +131,7 @@ class ErrorMonitor {
     const originalFetch = window.fetch
     window.fetch = async (...args) => {
       const [url] = args
-      const urlString = typeof url === 'string' ? url : url.url
+      const urlString = typeof url === 'string' ? url : url instanceof Request ? url.url : url.toString()
 
       try {
         const response = await originalFetch(...args)
