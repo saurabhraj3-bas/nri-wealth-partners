@@ -79,12 +79,12 @@ async function checkGoogleAI(): Promise<boolean> {
   return !!process.env.GOOGLE_AI_API_KEY
 }
 
-function checkEmailConfig(): Promise<boolean> {
+function checkEmailConfig(): boolean {
   // Check if email credentials are configured
   return !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD)
 }
 
-function checkEnvironmentVars(): Promise<boolean> {
+function checkEnvironmentVars(): boolean {
   // Check critical environment variables
   const required = ['GOOGLE_AI_API_KEY', 'NEXTAUTH_SECRET', 'NEXTAUTH_URL']
 
